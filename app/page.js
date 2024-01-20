@@ -5,12 +5,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { InputHome } from '@/components/InputHome';
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
+import AnswerPage from '@/components/AnswerPage';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState('');
   const [error, setError] = useState('');
   const { toast } = useToast()
+
   const handleAsk = async (question) => {
     setLoading(true);
 
@@ -45,7 +47,7 @@ const Home = () => {
   return (
     <main style={{overflowY:'scroll'}}>
     {loading && <p>Loading...</p>}
-    {answer ? (
+    {/* {answer ? (
       <>
         
         {error && (
@@ -57,12 +59,13 @@ const Home = () => {
           })
         )}
         {answer && (
-          <p style={{ width: '50%', margin: '0 auto',whiteSpace: 'pre-wrap'}}>{answer.content}</p>
+          <AnswerPage Answer={answer.content}/>
         )}
       </>
     ) : (
       <InputHome onAsk={handleAsk} />
-    )}
+    )} */}
+    <AnswerPage/>
     <div className="homepage-footer">
       <Link href="">Try Pro</Link>
       <Link href="">Careers</Link>
