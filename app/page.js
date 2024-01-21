@@ -15,7 +15,6 @@ const Home = () => {
   const dispatch = useDispatch()
   const handleAsk = async (question) => {
     setLoading(true);
-
     try {
       const response = await fetch('/api/llm', {
         method: 'POST',

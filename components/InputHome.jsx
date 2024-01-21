@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import Image from 'next/image'
-import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import { Textarea } from "@/components/ui/textarea"
-
+import { useRouter } from 'next/navigation'
 
 
   const InputHome = ({ onAsk }) => {
+  const router = useRouter();
   const [question, setQuestion] = useState('');
 
   const handleAsk = () => {
@@ -14,9 +13,9 @@ import { Textarea } from "@/components/ui/textarea"
       // Don't allow empty questions
       return;
     }
-
     // Call the onAsk prop, passing the question to the parent component (Home)
     onAsk(question);
+    router.push('/answer');
   }
     return (
       <>
