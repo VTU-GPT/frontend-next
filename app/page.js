@@ -45,7 +45,7 @@ const Home = () => {
   }
 
   return (
-    <main style={{overflowY:'scroll'}}>
+    <>
     {loading && <p>Loading...</p>}
     {answer ? (
       <>
@@ -68,7 +68,7 @@ const Home = () => {
     <div className="help-btn">
       <i className="ri-question-fill"></i>
     </div>
-  </main>
+    </>
   );
 };
 

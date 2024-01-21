@@ -1,12 +1,32 @@
+'use client';
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { Textarea } from "@/components/ui/textarea"
 
-const AnswerPage = ({ Answer }) => {
+const AnswerPage = () => {
+    const answerList = useSelector((store) => store.qna.content)
+    console.log(answerList)
     return (
-        <div className='answer-box'>
-            <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa fugiat hic sapiente dolorem commodi quisquam at repudiandae exercitationem deleniti laborum eos, possimus soluta facere doloremque velit adipisci ducimus? Atque delectus in, suscipit ducimus aperiam alias debitis ut, velit totam laboriosam quo. Praesentium nihil accusamus illum qui officiis esse alias culpa, accusantium enim nostrum veritatis molestias repellat nisi delectus ipsum odit quod cupiditate quas ullam adipisci vitae dolorum iure velit ea! Itaque pariatur voluptatibus aut molestias. A odit quod amet impedit, optio sunt beatae eos architecto iste veritatis odio vitae, praesentium placeat quaerat in! Sunt cumque unde, veniam magni autem voluptatum quibusdam illum quo similique ut nemo dolores libero, voluptate corrupti explicabo eveniet magnam recusandae fugiat eligendi deserunt voluptatibus officiis accusantium delectus. Voluptate odit totam minima omnis eum! Placeat ab ullam quaerat quia veniam, corrupti nam, delectus pariatur nulla expedita exercitationem itaque nisi alias obcaecati, nostrum praesentium ratione minima modi suscipit officiis eligendi. Illum amet blanditiis debitis recusandae nihil aliquid consequatur eligendi, cum eum nemo laborum magni quam molestiae iste aliquam maiores. Quis velit consequuntur hic soluta, laudantium dolorem sed suscipit veniam? Commodi deserunt velit repellat, nihil at ut quae incidunt praesentium numquam quis sunt earum itaque perspiciatis cumque. Dolor possimus cumque recusandae provident minima numquam et eius tempora, aut, mollitia inventore excepturi assumenda quam cum laborum alias quia expedita aliquid voluptatum maiores. Quibusdam aliquam quia tempore earum consequuntur esse dolorem ipsam labore tempora culpa nesciunt error est unde, impedit sint praesentium facere assumenda recusandae quis nisi fugit nam at fugiat odit. Iusto debitis necessitatibus accusantium ab consequatur recusandae sit sed. Molestias, tempora praesentium, et eos dolorem rem enim totam blanditiis ipsa nulla a, aperiam fuga corporis vel recusandae accusantium. Reiciendis, veniam? Sint non recusandae sed quod expedita nesciunt repellendus asperiores deserunt sunt! Ipsa, rerum natus facilis dolor voluptates eligendi laboriosam esse saepe. Impedit vel molestias maiores earum odio beatae consectetur dolorem? Iste repellat voluptates harum doloremque ut ullam earum odit maxime illo corporis non voluptatum fugit ducimus nobis similique eos, velit atque consequatur neque? Debitis, eveniet! Incidunt laboriosam vero debitis saepe magni assumenda cupiditate, vel eos ipsum voluptates quam totam tenetur minus amet ex rem! Fuga consequuntur veritatis, iste numquam optio iure sunt provident, totam quas similique veniam officiis nisi ipsa facilis amet quos porro. Error praesentium aspernatur doloremque aliquam quod obcaecati expedita nulla tempore saepe modi. Quas consequuntur magnam placeat quam repudiandae, vitae assumenda consectetur labore debitis exercitationem, nisi accusantium obcaecati recusandae laborum dolores esse minus ducimus unde? Totam hic a laborum inventore. Consequuntur cupiditate inventore sed ut aut, vitae a quas facilis nihil eaque distinctio? A asperiores vitae eius nisi alias provident, sequi nihil dolorem modi ipsa nesciunt cum doloribus, consequuntur voluptatum? Similique laborum, fugit placeat temporibus necessitatibus ullam aliquam cum. Sapiente aliquam laboriosam officia expedita? Possimus numquam nostrum dolorum eaque totam et quos, incidunt ducimus, quidem, aut qui voluptate consequatur dolorem corporis accusamus rem nulla voluptatum enim molestias delectus expedita itaque commodi earum sint. Maxime nobis voluptas porro est quos dolor quam sunt cum quas officiis provident, consequuntur culpa id dicta veritatis! Aperiam dolore in officiis non. Dolorum, illo voluptate dignissimos architecto pariatur natus provident cumque totam nobis quod ad, ratione labore blanditiis vel officiis expedita iusto eum quas harum suscipit. Delectus, expedita, eaque explicabo, architecto itaque earum error sit sint repudiandae ex ad officiis quas. Eius.
-            </p>
-        </div>
+        <>
+            <div className='answer-box'>
+                <div>
+                    {
+                        answerList.map((el, index) => (
+                            <>
+                                <h3 className='question'>{(index + 1) + ".  " + el.question}</h3>
+                                <p className='answer'>{el.answer}</p>
+                            </>
+                        ))
+                    }
+                </div>
+                <div className='text-area-div'>
+                    <Textarea placeholder='Ask Anything.....' className='resize-none text-area'/>
+                    <button className='ask-btn'><i className="ri-arrow-right-line" ></i></button>
+                </div>
+            </div>
+
+        </>
+
 
     )
 }

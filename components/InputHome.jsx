@@ -22,7 +22,12 @@ import { Textarea } from "@/components/ui/textarea"
       <div className='homepage-main'>
         <h1>Where Knowledge begins</h1>
         <div className='text-area-div'>
-        <Textarea placeholder='Ask Anything.....' className='resize-none text-area'
+        <Textarea placeholder='Ask Anything.....' 
+        className='resize-none text-area'
+          onKeyDown={(e) => {
+          if (e.key === "Enter")
+              handleAsk()
+          }}
           onChange={(e) => setQuestion(e.target.value)}
         />
         <button className='ask-btn' onClick={handleAsk}><i className="ri-arrow-right-line" ></i></button>

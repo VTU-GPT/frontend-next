@@ -19,7 +19,9 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={inter.className}>
           <Sidebar />
-          {children}
+          <main>
+            {children}
+          </main>
         </body>
       </html>
     </ReduxProvider>

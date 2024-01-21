@@ -13,7 +13,7 @@
     }
     .mobile-navigation{
         display: flex;
-        border-bottom: 2px solid rgba(128, 128, 128, 0.601);
+        border-bottom: 2px solid rgba(128, 128, 128, 0.142);
         position: absolute;
         top: 10px;
         left: 10px;
