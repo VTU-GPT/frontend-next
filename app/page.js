@@ -1,18 +1,18 @@
 "use client"
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Textarea } from '@/components/ui/textarea';
 import { InputHome } from '@/components/InputHome';
-import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import AnswerPage from '@/components/AnswerPage';
+import { addAnswer } from '@/provider/redux/Answer';
+import { useDispatch } from 'react-redux';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState('');
   const [error, setError] = useState('');
   const { toast } = useToast()
-
+  const dispatch = useDispatch()
   const handleAsk = async (question) => {
     setLoading(true);
 
@@ -28,7 +28,11 @@ const Home = () => {
       if (response.ok) {
         const data = await response.json();
         setAnswer(data.answer);
-        
+        dispatch(addAnswer({
+          question : question,
+          answer : data.answer.content
+      })
+      )
         setError('');
       } else {
         const data = await response.json();
@@ -58,9 +62,9 @@ const Home = () => {
             duration: 5000,
           })
         )}
-        {answer && (
+        {/* {answer && (
           <AnswerPage Answer={answer.content}/>
-        )}
+        )} */}
       </>
     ) : (
       <InputHome onAsk={handleAsk} />

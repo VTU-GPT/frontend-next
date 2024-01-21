@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Textarea } from "@/components/ui/textarea"
 
 
+
   const InputHome = ({ onAsk }) => {
   const [question, setQuestion] = useState('');
 
@@ -30,7 +31,7 @@ import { Textarea } from "@/components/ui/textarea"
           }}
           onChange={(e) => setQuestion(e.target.value)}
         />
-        <button className='ask-btn' onClick={handleAsk}><i className="ri-arrow-right-line" ></i></button>
+        <Link href='/answer'><button className='ask-btn' onClick={handleAsk}><i className="ri-arrow-right-line" ></i></button></Link>
         </div>
         <div className='homepage-suggestions'>
           <p>

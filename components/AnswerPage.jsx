@@ -1,9 +1,15 @@
 'use client';
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Textarea } from "@/components/ui/textarea"
+import { addAnswer } from '@/provider/redux/Answer';
 
 const AnswerPage = () => {
+    const dispatch = useDispatch()
+    const scrollTolast = () => {
+        const answerBoxEl = document.querySelector('.answer-box');
+        answerBoxEl.scrollTop = answerBoxEl.scrollHeight;
+    }
     const answerList = useSelector((store) => store.qna.content)
     console.log(answerList)
     return (
@@ -13,8 +19,8 @@ const AnswerPage = () => {
                     {
                         answerList.map((el, index) => (
                             <>
-                                <h3 className='question'>{(index + 1) + ".  " + el.question}</h3>
-                                <p className='answer'>{el.answer}</p>
+                                <h3 key={index} className='question'>{(index + 1) + ".  " + el.question}</h3>
+                                <p key={index} className='answer'>{el.answer}</p>
                             </>
                         ))
                     }
@@ -24,7 +30,14 @@ const AnswerPage = () => {
                     <button className='ask-btn'><i className="ri-arrow-right-line" ></i></button>
                 </div>
             </div>
-
+            {/* <button onClick={async function(){
+                await dispatch(addAnswer({
+                    question : 'who is my classmate?',
+                    answer : 'my classmate name is Varun and Vedant'
+                })
+                )
+                scrollTolast()
+            }}>Click me</button> */}
         </>
 
 

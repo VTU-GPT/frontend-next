@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     });
 
     const theResponse = completion.choices[0].message;
-
+    console.log(theResponse)
     res.status(200).json({ answer: theResponse });
   } catch (error) {
     console.error("Error:", error.message);
