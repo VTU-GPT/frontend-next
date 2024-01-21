@@ -18,7 +18,8 @@ import { Textarea } from "@/components/ui/textarea"
     onAsk(question);
   }
     return (
-    <div className='homepage-main'>
+      <>
+      <div className='homepage-main'>
         <h1>Where Knowledge begins</h1>
         <div className='text-area-div'>
         <Textarea placeholder='Ask Anything.....' className='resize-none text-area'
@@ -38,6 +39,15 @@ import { Textarea } from "@/components/ui/textarea"
           <Link href='/'>🪡 The best ateliers in Paris</Link>
         </div>
       </div>
+      <div className="homepage-footer">
+      <Link href="">Try Pro</Link>
+      <Link href="">Careers</Link>
+      <Link href="">Playground</Link>
+      <Link href="">Blog</Link>
+    </div>
+      </>
+    
+      
   )
 }
 

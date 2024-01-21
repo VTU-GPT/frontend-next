@@ -47,7 +47,7 @@ const Home = () => {
   return (
     <main style={{overflowY:'scroll'}}>
     {loading && <p>Loading...</p>}
-    {/* {answer ? (
+    {answer ? (
       <>
         
         {error && (
@@ -64,14 +64,7 @@ const Home = () => {
       </>
     ) : (
       <InputHome onAsk={handleAsk} />
-    )} */}
-    <AnswerPage/>
-    <div className="homepage-footer">
-      <Link href="">Try Pro</Link>
-      <Link href="">Careers</Link>
-      <Link href="">Playground</Link>
-      <Link href="">Blog</Link>
-    </div>
+    )}
     <div className="help-btn">
       <i className="ri-question-fill"></i>
     </div>
