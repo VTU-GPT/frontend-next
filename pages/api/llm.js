@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
     const completion = await anyscale.chat.completions.create({
         model: "meta-llama/Llama-2-7b-chat-hf",
-        messages: [{"role": "system", "content": "You are a professional educational assistant."}, 
+        messages: [{"role": "system", "content": "You are a professional educational assistant. Get to the answer directly without any introduction about yourself or any extra content that is not necessary."}, 
                    {"role": "user", "content": question}],
         temperature: 0.7
     });

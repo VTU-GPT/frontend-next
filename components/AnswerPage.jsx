@@ -23,7 +23,7 @@ const AnswerPage = () => {
                         answerList.map((el, index) => (
                             <>
                                 <h3 key={index} className='question'>{(index + 1) + ".  " + el.question}</h3>
-                                <p key={index} className='answer'>{el.answer}</p>
+                                <p key={index} className='answer' style={{whiteSpace: 'break-spaces'}}>{el.answer}</p>
                             </>
                         ))
                     }
