@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { addAnswer } from '@/provider/redux/Answer';
 import { handleAsk } from '@/utils/handleAsk.js'
 import { useState } from 'react';
+import Source from '@/components/ui/Sources';
 
 const AnswerPage = () => {
     const [question, setquestion] = useState("")
@@ -23,14 +24,25 @@ const AnswerPage = () => {
                         answerList.map((el, index) => (
                             <>
                                 <h3 key={index} className='question'>{(index + 1) + ".  " + el.question}</h3>
-                                <p key={index} className='answer' style={{whiteSpace: 'break-spaces'}}>{el.answer}</p>
+                                <div className="source-container">
+                                    <h1><i class="ri-database-fill"></i> Sources</h1>
+                                    <div><Source />
+                                        <Source />
+                                        <Source />
+                                        <Source />
+                                        <Source /></div>
+                                </div>
+                                <div className='subanswer-div'>
+                                    <h1><i class="ri-question-answer-fill"></i>  Answer</h1>
+                                    <p key={index} className='answer' style={{ whiteSpace: 'break-spaces' }}>{el.answer}</p>
+                                </div>
                             </>
                         ))
                     }
                 </div>
                 <div className='text-area-div'>
                     <Textarea placeholder='Ask Follow Up....' className='resize-none text-area'
-                    value ={question}
+                        value={question}
                         onChange={(e) => {
                             setquestion(e.target.value)
                         }}
@@ -48,18 +60,10 @@ const AnswerPage = () => {
                             const resp = await handleAsk(question);
                             await dispatch(addAnswer(resp))
                             setquestion("")
-                            scrollTolast()  
+                            scrollTolast()
                         }} ></i></button>
                 </div>
             </div>
-            {/* <button onClick={async function(){
-                await dispatch(addAnswer({
-                    question : 'who is my classmate?',
-                    answer : 'my classmate name is Varun and Vedant'
-                })
-                )
-                scrollTolast()
-            }}>Click me</button> */}
         </>
 
 
