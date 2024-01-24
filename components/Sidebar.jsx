@@ -20,10 +20,12 @@ const Sidebar = () => {
         <>
             <div className="sidebar">
                 <div className="logo">
+                    <Link href='/'>
                     <Image
                         src={logo}
                         alt="Picture of the author"
                     />
+                    </Link>
                 </div>
                 <AlertDialog>
                     <AlertDialogTrigger>
