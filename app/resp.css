@@ -33,4 +33,13 @@
         border-radius: 50px;
         font-size: 2.3vw;
     }
+    .answer-box{
+        margin-top: 100px;
+    }
+    .answer-box .text-area-div{
+        width: 90%;
+    }
+    .source-container{
+        margin-bottom: 160px;
+    }
 }
