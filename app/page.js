@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/use-toast"
 import AnswerPage from '@/components/AnswerPage';
 import { addAnswer } from '@/provider/redux/Answer';
 import { useDispatch } from 'react-redux';
+import ReactLoading from 'react-loading'
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -49,10 +50,8 @@ const Home = () => {
 
   return (
     <>
-    {loading && <p>Loading...</p>}
     {answer ? (
       <>
-        
         {error && (
           toast({
             title: "Error",
@@ -66,7 +65,10 @@ const Home = () => {
         )} */}
       </>
     ) : (
+      <div>
       <InputHome onAsk={handleAsk} />
+      {loading && <div className='h-full w-full absolute top-0 flex justify-center items-center bg-zinc-200 left-0'><ReactLoading type='spin' color='#13343B' height={'50px'} width={'70px'} /></div>}
+      </div>
     )}
     <div className="help-btn">
       <i className="ri-question-fill"></i>

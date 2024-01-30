@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { addAnswer } from '@/provider/redux/Answer';
 import { handleAsk } from '@/utils/handleAsk.js'
 import { useState } from 'react';
+import ReactLoading from 'react-loading';
 import Source from '@/components/ui/Sources';
 import Link from 'next/link';
 import {
@@ -19,18 +20,18 @@ import {
 const AnswerPage = () => {
     const [notebookName, setNotebookName] = useState("New Notebook")
     const [question, setquestion] = useState("")
+    const [loading,setLoading] = useState(false);
     const dispatch = useDispatch()
     const scrollTolast = () => {
         const answerBoxEl = document.querySelector('.answer-box');
         answerBoxEl.scrollTop = answerBoxEl.scrollHeight;
     }
     const answerList = useSelector((store) => store.qna.content)
-    console.log(answerList)
     return (
         <>
             <div className="answer-container">
                 <div className="answer-submenu-container">
-                    <i class="ri-booklet-fill"></i>
+                    <i className="ri-booklet-fill"></i>
                     <div className='submenu-div'>
                         <div className="notebook-name-box">
                             <Textarea className='resize-none' value={notebookName} onChange={(e)=> setNotebookName(e.target.value)}
@@ -86,6 +87,7 @@ const AnswerPage = () => {
                             ))
                         }
                     </div>
+                    {loading && <div className='flex justify-center'><ReactLoading type='spin' color='#13343B' height={'50px'} width={'70px'} /></div>}
                     <div className='text-area-div'>
                         <Textarea placeholder='Ask Follow Up....' className='resize-none text-area'
                             value={question}
@@ -95,9 +97,12 @@ const AnswerPage = () => {
                             onKeyDown={async (e) => {
                                 if (e.key === "Enter") {
                                     setquestion("")
+                                    setLoading(true)
+                                    scrollTolast()
                                     e.target.blur();
                                     const resp = await handleAsk(question);
                                     await dispatch(addAnswer(resp))
+                                    setLoading(false)
                                     scrollTolast()
                                 }
                             }}
@@ -105,9 +110,12 @@ const AnswerPage = () => {
                         <button className='ask-btn'><i className="ri-arrow-right-line"
                             onClick={async (e) => {
                                 setquestion("")
+                                setLoading(true)
+                                scrollTolast()
                                 e.target.blur();
                                 const resp = await handleAsk(question);
                                 await dispatch(addAnswer(resp))
+                                setLoading(false)
                                 scrollTolast()
                             }} ></i></button>
                     </div>

@@ -193,10 +193,6 @@ main{
     margin-bottom: 20px;
     background-color: transparent;
     transition: all 0.3s ease;
-    outline: none;
-}
-.text-area:focus-visible{
-    outline: none;
 }
 .ask-btn{
     position: absolute;
@@ -288,7 +284,6 @@ main{
     width: 300px;
     overflow: hidden;
     background-color: transparent;
-    outline: none !important;
 }
 .dropdown-menu{
     border: 2px solid red;
