@@ -263,6 +263,7 @@ main{
     display: flex;
     flex-direction: column;
     width: 100%;
+    justify-content: center;
 }
 .answer-submenu-container i{
     font-size: 2rem;
@@ -278,7 +279,7 @@ main{
     gap: 30px;
     padding-left: 20px;
     align-items: center;
-    height: 50%;
+    /* height: 50%; */
     font-size: 0.9rem;
 }
 .notebook-name-box textarea{
