@@ -22,14 +22,16 @@ import { useRouter } from 'next/navigation'
       <div className='homepage-main'>
         <h1>Where Knowledge begins</h1>
         <div className='text-area-div'>
-        <Textarea placeholder='Ask Anything.....' 
-        className='resize-none text-area'
+          <Textarea 
+          placeholder='Ask a Question...' 
+          className='resize-none text-area'
+          style={{ fontSize: '16px' }}  // Adjust the font size as needed
           onKeyDown={(e) => {
-          if (e.key === "Enter")
-              handleAsk()
+            if (e.key === "Enter") handleAsk()
           }}
           onChange={(e) => setQuestion(e.target.value)}
         />
+
         <Link href='/answer'><button className='ask-btn' onClick={handleAsk}><i className="ri-arrow-right-line" ></i></button></Link>
         </div>
         <div className='homepage-suggestions'>

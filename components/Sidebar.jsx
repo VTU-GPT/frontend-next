@@ -58,29 +58,11 @@ const Sidebar = () => {
                 </ul>
                 <Link href='' className='signup-button'>Sign Up</Link>
                 <div className="sidebar-bottom">
-                    <h4>Try Pro</h4>
-                    <p>Upgrade for image upload, smarter AI, and more Copilot.</p>
-                    <Button className='learn-more-btn' variant="secondary"><i className="ri-arrow-right-up-line"></i> Learn More</Button>
-                    <div className='line'></div>
-                    <div className="sidebar-footer">
-                        <Link href="/"><i className="ri-smartphone-line"></i> Download</Link>
-                        <span>
-                            <Link href='/'><i className="ri-twitter-x-line"></i></Link>
-                            <Link href='/'><i className="ri-discord-fill"></i></Link>
-                        </span>
-                    </div>
+                    
                 </div>
             </div>
             {/* mobile navigation */}
-            <div className="mobile-navigation">
-                <div className="logo">
-                    <Image
-                        src={logo}
-                        alt="Picture of the author"
-                    />
-                </div>
-                <Link href='#'>Get App</Link>
-            </div>
+            
         </>
 
     )
