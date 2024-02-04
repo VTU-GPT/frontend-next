@@ -26,7 +26,7 @@ body{
 .sidebar{
     height: 100dvh;
     width: 250px;
-    background-color: white;
+    background-color: rgba(255,255,255,1)
 }
 main{
     height: 100dvh;
@@ -37,7 +37,8 @@ main{
     align-items: center;
     position: relative;
     overflow: hidden;
-    background-color: rgba(240, 234, 223, 0.551);
+    background: rgb(255,255,255);
+background: linear-gradient(121deg, rgba(255,255,255,1) 0%, rgba(255,221,192,1) 100%);
 }
 .bg-image{
     position: absolute;
