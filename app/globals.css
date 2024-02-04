@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --primaryColor: #e86b047e;
+    --white: #ffffff;
+  }
+
 *{
     margin: 0;
     padding: 0;
@@ -11,7 +16,6 @@
 }
 
 body{
-    background-color: #F3F3EE;
     display: flex;
     height: 100dvh;
     justify-content: flex-end;
@@ -19,57 +23,13 @@ body{
     position: relative;
     font-family: "Poppins";
 }
-.logo{
-    width: 80%;
-    padding: 20px 0px;
-    font-weight: bolder;
-    border-radius: 30px;
-    overflow: hidden;
-}
-.logo img{
-    height: 100%;
-    width: 100%;
-}
 .sidebar{
-    height: 97.5dvh;
-    width: 220px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    position: absolute;
-    left: 10px;
+    height: 100dvh;
+    width: 250px;
+    background-color: white;
 }
-.sidebar ul{    
-    width: 100%;
-    margin: 15px 0px;
-}
-.sidebar li{
-    transition: all 0.2s ease;
-    width: 97%;
-}
-.sidebar li:hover{
-    background-color: #E8E8E3;
-    color: #20808D;
-}
-.sidebar li a{
-    font-size: 17px;
-    display: flex;
-    align-items: center;
-    padding: 7px 0px 10px 15px;
-    transition: all 0.4s ease;
-    margin-left: 10px;
-    width: 100%;
-    opacity: 0.8;
-    border-radius: 20px;
-}
-.sidebar li i{
-    padding-right: 10px;
-} 
-
 main{
-    background-color: #FCFCF9;
-    height: 97.5dvh;
+    height: 100dvh;
     width: calc(100% - 230px); 
     border-radius: 10px;
     display: flex;
@@ -77,6 +37,17 @@ main{
     align-items: center;
     position: relative;
     overflow: hidden;
+    background-color: rgba(240, 234, 223, 0.551);
+}
+.bg-image{
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    background-image: url('/bg-main.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.05;
 }
 .new-notebook{
         background-color: #FCFCF9;
@@ -89,7 +60,7 @@ main{
     border-color: #20808D;
 }
 .signup-button{
-    background-color: #ADD503;
+    background-color: var(--primaryColor);
     width: 90%;
     padding: 8px 40px;
     border: 3px solid #E8E8E0;
@@ -191,7 +162,6 @@ main{
     height: 120px;
     width: 100%;
     margin-bottom: 20px;
-    background-color: transparent;
     transition: all 0.3s ease;
 }
 .ask-btn{
@@ -202,55 +172,40 @@ main{
     border-radius: 50%;
     height: 30px;
     width: 30px;
-    background-color: #B6E003;
+    background-color: var(--primaryColor);
     transition: all 0.3s ease-in-out;
 }
 .ask-btn:hover{
-    background-color: #333332;
-    color: #B6E003;
+    background-color: rgb(209, 161, 88);
+    color: black;
 }
 
-/* homepage-footer   */
-.homepage-footer{
-    display:flex;
-    gap: 15px;
-    position:absolute;
-    bottom: 15px;
-    font-size: 0.85rem;
-    opacity: 0.8;
-    justify-content: center;
-    align-items: center;
-}
-.homepage-footer a:hover{
-    text-decoration: underline;
-}
 .help-btn{
-    color: #B6E103;
+    color: var(--primaryColor);
     font-size: 2.2rem;
     position: absolute;
     bottom: 0px;
     right: 20px;
 }
 .help-btn i{
-    background-color: #13343B;
     border-radius: 50%;
 }
 
 /* answer-page   */
 .answer-container{
-    height: 100%;
+    height: 97.5%;
     width: 100%;
     background-color: #F3F3EE;
     font-family: 'Poppins';
     color:#13343B;
+    overflow: hidden;
 }
 .answer-submenu-container{
     width: -webkit-fill-available;
     /* padding: 5px; */
     position: fixed;
-    top: 0;
+    top: 0px;
     height: 50px;
-    /* width: 100%; */
     display: flex;
     align-items: center;
     gap: 20px;
@@ -392,7 +347,7 @@ main{
     border-radius: 50%;
     height: 30px;
     width: 30px;
-    background-color: #B6E003;
+    background-color: var(--primaryColor);
     transition: all 0.3s ease-in-out;
     position: absolute;
     top: 15%;

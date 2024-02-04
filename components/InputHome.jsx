@@ -4,35 +4,37 @@ import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from 'next/navigation'
 
 
-  const InputHome = ({ onAsk }) => {
+const InputHome = ({ onAsk }) => {
   const router = useRouter();
   const [question, setQuestion] = useState('');
 
   const handleAsk = () => {
-    if (question.trim() === '') {
-      // Don't allow empty questions
-      return;
+    console.log(question.length)
+    if (question.trim().length != 0) {
+      onAsk(question);
+      router.push('/answer');
     }
-    // Call the onAsk prop, passing the question to the parent component (Home)
-    onAsk(question);
-    router.push('/answer');
   }
-    return (
-      <>
+  return (
+    <>
       <div className='homepage-main'>
+        <div className="bg-image"></div>
         <h1>Where Knowledge begins</h1>
         <div className='text-area-div'>
-          <Textarea 
-          placeholder='Ask a Question...' 
-          className='resize-none text-area'
-          style={{ fontSize: '16px' }}  // Adjust the font size as needed
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleAsk()
-          }}
-          onChange={(e) => setQuestion(e.target.value)}
-        />
+          <Textarea
+            placeholder='Ask a Question...'
+            className='resize-none text-area text-blue-100 bg-transparent text-black'
+            style={{ fontSize: '16px' }}  // Adjust the font size as needed
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleAsk()
+            }}
+            onChange={(e) => setQuestion(e.target.value)}
+          />
 
-        <Link href='/answer'><button className='ask-btn' onClick={handleAsk}><i className="ri-arrow-right-line" ></i></button></Link>
+          <Link href=''><button className='ask-btn' onClick={(e)=>{
+            e.preventDefault();
+            handleAsk()
+          }}><i className="ri-arrow-right-line" ></i></button></Link>
         </div>
         <div className='homepage-suggestions'>
           <p>
@@ -46,16 +48,10 @@ import { useRouter } from 'next/navigation'
           <Link href='/'>🪡 The best ateliers in Paris</Link>
         </div>
       </div>
-      <div className="homepage-footer">
-      <Link href="">Try Pro</Link>
-      <Link href="">Careers</Link>
-      <Link href="">Playground</Link>
-      <Link href="">Blog</Link>
-    </div>
-      </>
-    
-      
+    </>
+
+
   )
 }
 
-export {InputHome};
+export { InputHome };
