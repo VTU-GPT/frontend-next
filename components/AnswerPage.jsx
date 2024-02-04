@@ -23,7 +23,7 @@ const AnswerPage = () => {
             <div className="answer-container">
                 <div className='answer-box flex flex-row justify-center '>
                     <div className='flex flex-col w-full'>
-                        <div className="answer-submenu-container flex justify-between py-7 px-5 bg-white">
+                        <div className="answer-submenu-container flex justify-between py-7 px-5">
                             <input
                                 className='p-2 bg-inherit outline-none focus:outline-1'
                                 value={notebookName}
@@ -51,7 +51,7 @@ const AnswerPage = () => {
                             </button>
                         </div>
 
-                        <div className="w-3/5 mx-auto mt-14 pb-12">
+                        <div className="w-3/5 mx-auto mt-16 pb-12">
                             {
                                 answerList.map((el, index) => (
                                     <>

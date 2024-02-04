@@ -19,12 +19,12 @@ const InputHome = ({ onAsk }) => {
     <>
       <div className='homepage-main'>
         <div className="bg-image"></div>
-        <h1>Where Knowledge begins</h1>
+        <h1 className="mb-4">Where Knowledge begins</h1>
         <div className='text-area-div'>
           <Textarea
             placeholder='Ask a Question...'
-            className='resize-none text-area text-blue-100 bg-transparent text-black'
-            style={{ fontSize: '16px' }}  // Adjust the font size as needed
+            className='resize-none text-area bg-transparent text-black'
+            style={{ fontSize: '16px',backgroundColor: 'white',marginBottom:10, borderRadius:20,padding: 20,outline:0}}  // Adjust the font size as needed
             onKeyDown={(e) => {
               if (e.key === "Enter") handleAsk()
             }}
@@ -34,7 +34,7 @@ const InputHome = ({ onAsk }) => {
           <Link href=''><button className='ask-btn' onClick={(e)=>{
             e.preventDefault();
             handleAsk()
-          }}><i className="ri-arrow-right-line" ></i></button></Link>
+          }}><i className="ri-arrow-right-line text-white" ></i></button></Link>
         </div>
         <div className='homepage-suggestions'>
           <p>

@@ -221,9 +221,9 @@ const Sidebar = () => {
 
                         <div>
                             <p className="text-xs">
-                                <strong className="block font-medium">Eric Frusciante</strong>
+                                <strong className="block font-medium">Tejas S P</strong>
 
-                                <span> eric@frusciante.com </span>
+                                <span> ceo@edgpt.in </span>
                             </p>
                         </div>
                     </a>
