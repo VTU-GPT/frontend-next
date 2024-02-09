@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -16,6 +17,14 @@ import Link from 'next/link'
 import logo from '@/public/logo_vtu-gpt.png'
 
 const Sidebar = () => {
+    useEffect(()=>{
+        document.querySelector('.mob-nav').addEventListener('click',function(){
+            document.querySelector('.sidebar').style.transform = 'translateX(0px)'
+        })
+        document.querySelector('.close-btn').addEventListener('click',function(){
+            document.querySelector('.sidebar').style.transform = 'translateX(-100%)'
+        })
+    })
     return (
         // <>
         //     <div className="sidebar">
@@ -66,9 +75,10 @@ const Sidebar = () => {
         // </>
         <>
             <div className="sidebar flex h-screen flex-col justify-between border-e">
+                <div className='close-btn sm:inline md:hidden'><i className="ri-arrow-left-double-line"></i></div>
                 <div className="px-4 py-6">
                     <span className="grid h-10 w-full px-10 place-content-center rounded-lg">
-                        <Link href='/'><Image src={logo}></Image></Link>
+                        <Link href='/'><Image className='logo' src={logo}></Image></Link>
                     </span>
 
                     <ul className="mt-6 space-y-1">
@@ -229,6 +239,11 @@ const Sidebar = () => {
                     </a>
                 </div>
             </div>
+            {/* Mobile Navigation   */}
+            <div className='mob-nav sm:block md:hidden inline'>
+                <div><i className="ri-menu-2-line"></i></div>
+            </div>
+            
         </>
     )
 }
