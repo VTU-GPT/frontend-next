@@ -55,10 +55,19 @@ const AnswerPage = () => {
                             {
                                 answerList.map((el, index) => (
                                     <>
-                                        <h3 key={index} className='question' style={{ fontWeight: 600 }}>{(index + 1) + ".  " + el.question}</h3>
+                                        <h3 key={el.id} className='question' style={{ fontWeight: 600 }}>{(index + 1) + ".  " + el.question}</h3>
                                         <div className='subanswer-div'>
                                             <h1 className='flex gap-2'><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="align-left" className="svg-inline--fa fa-align-left fa-fw w-4 inline" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M24 40C10.7 40 0 50.7 0 64S10.7 88 24 88H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zm0 128c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zM0 320c0 13.3 10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24c-13.3 0-24 10.7-24 24zM24 424c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24z"></path></svg><span>Answer</span></h1>
-                                            <p key={index} className='answer' style={{ whiteSpace: 'break-spaces' }}>{el.answer.slice(1)}</p>
+                                            {el.answer ? <p key={el.id} className='answer' style={{ whiteSpace: 'break-spaces' }}>{el.answer.slice(1)}</p> : <div class="flex flex-col gap-2 pt-4">
+			<div class="w-3/5 h-5 bg-gray-300 rounded-2xl animate-pulse" style={{animationDelay:0.2}}></div>
+			<div class="w-5/6 h-5 bg-gray-300 rounded-2xl animate-pulse" style={{animationDelay:0.25}}></div>
+			<div class="w-3/4 h-5 bg-gray-300 rounded-2xl animate-pulse" style={{animationDelay:0.3}}></div>
+			<div class="w-full h-5 bg-gray-300 rounded-2xl animate-pulse" style={{animationDelay:0.35}}></div>
+			<div class="w-3/5 h-5 bg-gray-300 rounded-2xl animate-pulse" style={{animationDelay:0.4}}></div>
+			<div class="w-3/4 h-5 bg-gray-300 rounded-2xl animate-pulse" style={{animationDelay:0.45}}></div>
+			<div class="w-full h-5 bg-gray-300 rounded-2xl animate-pulse" style={{animationDelay:0.5}}></div>
+			<div class="w-11/12 h-5 bg-gray-300 rounded-2xl animate-pulse" style={{animationDelay:0.55}}></div>
+		</div>}
                                         </div>
                                         <div className="source-container">
                                             <h1 className='flex gap-2'><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="list-timeline" className="svg-inline--fa fa-list-timeline fa-fw w-4 inline" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M219.9 112H400V80H219.9l-16 16 16 16zm-72.6-4.7c-6.2-6.2-6.2-16.4 0-22.6l43.3-43.3c6-6 14.1-9.4 22.6-9.4H416c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H213.3c-8.5 0-16.6-3.4-22.6-9.4l-43.3-43.3zM64 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm0 160a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM32 416a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm187.9 16H400V400H219.9l-16 16 16 16zm-72.6-4.7c-6.2-6.2-6.2-16.4 0-22.6l43.3-43.3c6-6 14.1-9.4 22.6-9.4H416c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H213.3c-8.5 0-16.6-3.4-22.6-9.4l-43.3-43.3zM203.9 256l16 16H464V240H219.9l-16 16zm-13.3 54.6l-43.3-43.3c-6.2-6.2-6.2-16.4 0-22.6l43.3-43.3c6-6 14.1-9.4 22.6-9.4H480c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H213.3c-8.5 0-16.6-3.4-22.6-9.4z"></path></svg><span>Sources</span></h1>
@@ -84,6 +93,10 @@ const AnswerPage = () => {
                             onChange={(e) => setquestion(e.target.value)}
                             onKeyDown={async (e) => {
                                 if (e.key === 'Enter') {
+                                    await dispatch(addAnswer({
+                                        question: question,
+                                        answer: ''
+                                    }))
                                     setquestion('');
                                     setLoading(true);
                                     scrollTolast();
@@ -98,6 +111,10 @@ const AnswerPage = () => {
                         <button
                             className="follow-ask-btn flex items-center justify-center text-white bg-black rounded-3xl "
                             onClick={async (e) => {
+                                await dispatch(addAnswer({
+                                    question: question,
+                                    answer: ''
+                                }))
                                 setquestion('');
                                 setLoading(true);
                                 scrollTolast();

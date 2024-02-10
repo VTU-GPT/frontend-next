@@ -16,6 +16,11 @@ const Home = () => {
   const dispatch = useDispatch()
   const handleAsk = async (question) => {
     setLoading(true);
+    dispatch(addAnswer({
+      question: question,
+      answer: ""
+    })
+    )
     try {
       const response = await fetch('/api/llm', {
         method: 'POST',
@@ -29,10 +34,10 @@ const Home = () => {
         const data = await response.json();
         setAnswer(data.answer);
         dispatch(addAnswer({
-          question : question,
-          answer : data.answer.content
-      })
-      )
+          question: question,
+          answer: data.answer.content
+        })
+        )
         setError('');
       } else {
         const data = await response.json();
@@ -50,29 +55,29 @@ const Home = () => {
 
   return (
     <>
-    {answer ? (
-      <>
-        {error && (
-          toast({
-            title: "Error",
-            description: error,
-            status: "error",
-            duration: 5000,
-          })
-        )}
-        {/* {answer && (
+      {answer ? (
+        <>
+          {error && (
+            toast({
+              title: "Error",
+              description: error,
+              status: "error",
+              duration: 5000,
+            })
+          )}
+          {/* {answer && (
           <AnswerPage Answer={answer.content}/>
         )} */}
-      </>
-    ) : (
-      <div>
-      <InputHome onAsk={handleAsk} />
-      {loading && <div className='h-full w-full absolute top-0 flex justify-center items-center bg-zinc-200 left-0'><ReactLoading type='spin' color='#13343B' height={'50px'} width={'70px'} /></div>}
-      </div>  
-    )}
-    <div className="help-btn">
-      <i className="ri-question-fill"></i>
-    </div>
+        </>
+      ) : (
+        <div>
+          <InputHome onAsk={handleAsk} />
+          {loading && <div className='h-full w-full absolute top-0 flex justify-center items-center bg-zinc-200 left-0'><ReactLoading type='spin' color='#13343B' height={'50px'} width={'70px'} /></div>}
+        </div>
+      )}
+      <div className="help-btn">
+        <i className="ri-question-fill"></i>
+      </div>
     </>
   );
 };

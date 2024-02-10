@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 import logo from '@/public/logo_vtu-gpt.png'
+
 const InputHome = ({ onAsk }) => {
   const router = useRouter();
   const [question, setQuestion] = useState('');
