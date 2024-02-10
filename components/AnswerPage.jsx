@@ -31,7 +31,7 @@ const AnswerPage = () => {
                             />
                             <button
                                 type="button"
-                                className="bg-gray-600 text-white hover:opacity-80 font-sans focus:outline-none transition duration-300 ease-in-out select-none items-center justify-center rounded cursor-pointer active:scale-95 whitespace-nowrap inline-flex text-sm px-4 font-medium h-8"
+                                className="bg-gray-600 text-white hover:opacity-80 font-sans focus:outline-none transition duration-300 ease-in-out select-none items-center justify-center rounded cursor-pointer active:scale-95 whitespace-nowrap inline-flex text-sm px-4 font-medium h-8 absolute right-2"
                             >
                                 <div className="flex items-center">
                                     <svg
