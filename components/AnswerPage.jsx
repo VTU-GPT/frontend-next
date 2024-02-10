@@ -22,7 +22,7 @@ const AnswerPage = () => {
     return (
         <>
             <div className="answer-container">
-                <div className='answer-box flex flex-row justify-center '>
+                <div className='answer-box flex flex-row justify-center'>
                     <div className='flex flex-col w-full'>
                         <div className="answer-submenu-container flex justify-between py-7 px-5">
                             <input

@@ -7,6 +7,7 @@ import AnswerPage from '@/components/AnswerPage';
 import { addAnswer } from '@/provider/redux/Answer';
 import { useDispatch } from 'react-redux';
 import ReactLoading from 'react-loading'
+import Sidebar from '@/components/Sidebar'
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -54,7 +55,8 @@ const Home = () => {
   }
 
   return (
-    <>
+    <div className='w-full flex items-center justify-center'>
+      <Sidebar/>
       {answer ? (
         <>
           {error && (
@@ -70,7 +72,7 @@ const Home = () => {
         )} */}
         </>
       ) : (
-        <div>
+        <div className='w-full h-full flex justify-center relative items-center'>
           <InputHome onAsk={handleAsk} />
           {loading && <div className='h-full w-full absolute top-0 flex justify-center items-center bg-zinc-200 left-0'><ReactLoading type='spin' color='#13343B' height={'50px'} width={'70px'} /></div>}
         </div>
@@ -78,7 +80,7 @@ const Home = () => {
       <div className="help-btn">
         <i className="ri-question-fill"></i>
       </div>
-    </>
+    </div>
   );
 };
 

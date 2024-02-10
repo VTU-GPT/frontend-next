@@ -18,6 +18,7 @@ const InputHome = ({ onAsk }) => {
   }
   return (
     <>
+      <div className='w-full border-3 border-gray-900'>
       <div className='homepage-main'>
         <div className="bg-image"></div>
         <Image className='logo absolute top-5 md:hidden' src={logo}></Image>
@@ -49,6 +50,7 @@ const InputHome = ({ onAsk }) => {
           <Link href='/'>🪶 Why do we stuff pillows with feathers?</Link>
           <Link href='/'>🪡 The best ateliers in Paris</Link>
         </div>
+      </div>
       </div>
     </>
 

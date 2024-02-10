@@ -1,10 +1,10 @@
 
 import { Inter } from 'next/font/google'
-import Sidebar from '@/components/Sidebar'
 import './globals.css'
 import './resp.css'
 import 'remixicon/fonts/remixicon.css'
 import ReduxProvider from '@/provider/redux/ReduxProvider'
+import Sidebar from '@/components/Sidebar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,10 +18,7 @@ export default function RootLayout({ children }) {
     <ReduxProvider>
       <html lang="en">
         <body className={inter.className}>
-          <Sidebar />
-          <main>
             {children}
-          </main>
         </body>
       </html>
     </ReduxProvider>

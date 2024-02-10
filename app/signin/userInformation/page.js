@@ -1,11 +1,9 @@
-import AnswerPage from '@/components/AnswerPage'
+import Postsignin from '@/components/Postsignin'
 import React from 'react'
 
 const page = () => {
   return (
-    <>
-    <AnswerPage/>
-    </>
+    <Postsignin/>
   )
 }
 
