@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Link from 'next/link'
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from 'next/navigation'
-
-
+import Image from 'next/image';
+import logo from '@/public/logo_vtu-gpt.png'
 const InputHome = ({ onAsk }) => {
   const router = useRouter();
   const [question, setQuestion] = useState('');
@@ -19,6 +19,7 @@ const InputHome = ({ onAsk }) => {
     <>
       <div className='homepage-main'>
         <div className="bg-image"></div>
+        <Image className='logo absolute top-5 md:hidden' src={logo}></Image>
         <h1 className="mb-4">Where Knowledge begins</h1>
         <div className='text-area-div'>
           <Textarea

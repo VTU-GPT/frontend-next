@@ -68,7 +68,7 @@ const Home = () => {
       <div>
       <InputHome onAsk={handleAsk} />
       {loading && <div className='h-full w-full absolute top-0 flex justify-center items-center bg-zinc-200 left-0'><ReactLoading type='spin' color='#13343B' height={'50px'} width={'70px'} /></div>}
-      </div>
+      </div>  
     )}
     <div className="help-btn">
       <i className="ri-question-fill"></i>

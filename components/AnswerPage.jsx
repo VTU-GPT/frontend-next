@@ -25,7 +25,7 @@ const AnswerPage = () => {
                     <div className='flex flex-col w-full'>
                         <div className="answer-submenu-container flex justify-between py-7 px-5">
                             <input
-                                className='p-2 bg-inherit outline-none focus:outline-1'
+                                className='notebook-name-box p-2 bg-inherit outline-none focus:outline-1'
                                 value={notebookName}
                                 onChange={(e) => setNotebookName(e.target.value)}
                             />
@@ -51,7 +51,7 @@ const AnswerPage = () => {
                             </button>
                         </div>
 
-                        <div className="w-3/5 mx-auto mt-16 pb-12">
+                        <div className="w-4/5 md:w-3/5 mx-auto mt-16 pb-12">
                             {
                                 answerList.map((el, index) => (
                                     <>
@@ -75,7 +75,7 @@ const AnswerPage = () => {
                     </div>
 
 
-                    <div className="fixed bottom-8 w-3/5 m-auto flex items-center p-2 bg-white rounded-xl border focus:outline-none focus:ring focus:border-blue-300">
+                    <div className="fixed bottom-8 w-10/12 md:w-3/5 m-auto flex items-center p-2 bg-white rounded-xl border focus:outline-none focus:ring focus:border-blue-300">
                         <input
                             type="text"
                             placeholder="Ask Follow Up...."
@@ -96,7 +96,7 @@ const AnswerPage = () => {
                             }}
                         />
                         <button
-                            className=" flex items-center text-white bg-black rounded-3xl ml-2"
+                            className="follow-ask-btn flex items-center justify-center text-white bg-black rounded-3xl "
                             onClick={async (e) => {
                                 setquestion('');
                                 setLoading(true);
@@ -108,13 +108,12 @@ const AnswerPage = () => {
                                 scrollTolast();
                             }}
                         >
-
                             {loading ? (
-                                <div className='w-6 h-6 mx-4 my-2'>
+                                <div>
                                     <ReactLoading type='spin' color='white' height={'20px'} width={'20px'} />
                                 </div>
                             ) : (
-                                <i className="ri-arrow-right-line mx-4 my-2" style={{ fontSize: '20px' }}></i>
+                                <i className="ri-arrow-right-line" style={{ fontSize: '20px' }}></i>
                             )}
 
                         </button>
