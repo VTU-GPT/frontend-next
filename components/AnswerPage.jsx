@@ -86,6 +86,27 @@ const AnswerPage = () => {
                             onChange={(e) => setquestion(e.target.value)}
                             onKeyDown={async (e) => {
                                 if (e.key === 'Enter') {
+                                    if(question){
+                                        await dispatch(addAnswer({
+                                            question: question,
+                                            answer: ''
+                                        }))
+                                        setquestion('');
+                                        setLoading(true);
+                                        scrollTolast();
+                                        e.target.blur();
+                                        const resp = await handleAsk(question);
+                                        await dispatch(addAnswer(resp));
+                                        setLoading(false);
+                                        scrollTolast();
+                                    }
+                                }
+                            }}
+                        />
+                        <button
+                            className="follow-ask-btn flex items-center justify-center text-white bg-black rounded-3xl "
+                            onClick={async (e) => {
+                                if(question){
                                     await dispatch(addAnswer({
                                         question: question,
                                         answer: ''
@@ -99,23 +120,6 @@ const AnswerPage = () => {
                                     setLoading(false);
                                     scrollTolast();
                                 }
-                            }}
-                        />
-                        <button
-                            className="follow-ask-btn flex items-center justify-center text-white bg-black rounded-3xl "
-                            onClick={async (e) => {
-                                await dispatch(addAnswer({
-                                    question: question,
-                                    answer: ''
-                                }))
-                                setquestion('');
-                                setLoading(true);
-                                scrollTolast();
-                                e.target.blur();
-                                const resp = await handleAsk(question);
-                                await dispatch(addAnswer(resp));
-                                setLoading(false);
-                                scrollTolast();
                             }}
                         >
                             {loading ? (

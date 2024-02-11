@@ -12,16 +12,18 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import Image from 'next/image'
-import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import logo from '@/public/logo_vtu-gpt.png'
+import { signOut, useSession } from 'next-auth/react'
 
 const Sidebar = () => {
-    useEffect(()=>{
-        document.querySelector('.mob-nav').addEventListener('click',function(){
+    const session = useSession();
+    console.log(session)
+    useEffect(() => {
+        document.querySelector('.mob-nav').addEventListener('click', function () {
             document.querySelector('.sidebar').style.transform = 'translateX(0px)'
         })
-        document.querySelector('.close-btn').addEventListener('click',function(){
+        document.querySelector('.close-btn').addEventListener('click', function () {
             document.querySelector('.sidebar').style.transform = 'translateX(-100%)'
         })
     })
@@ -154,14 +156,26 @@ const Sidebar = () => {
                                 </ul>
                             </details>
                         </li>
-                        <li>
+                        {session.status == 'authenticated' ? <li>
                             <Link
-                                href="/signin"
+                                href="/" onClick={(e) => {
+                                    e.preventDefault();
+                                    signOut('google');
+                                }}
                                 className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                             >
-                                Sign In
+                                Logout
                             </Link>
-                        </li>
+                        </li> :
+                            <li>
+                                <Link
+                                    href="/signin"
+                                    className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                >
+                                    Sign In
+                                </Link>
+                            </li>
+                        }
 
                         <li>
                             <details className="group [&_summary::-webkit-details-marker]:hidden">
@@ -221,29 +235,29 @@ const Sidebar = () => {
                     </ul>
                 </div>
 
-                <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
+                {session.status === 'authenticated' ? <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
                     <a href="#" className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
                         <img
                             alt="Man"
-                            src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                            src={session?.data?.user?.image}
                             className="h-10 w-10 rounded-full object-cover"
                         />
 
                         <div>
                             <p className="text-xs">
-                                <strong className="block font-medium">Tejas S P</strong>
+                                <strong className="block font-medium">{session.data.user?.name}</strong>
 
-                                <span> ceo@edgpt.in </span>
+                                <span className='text-xs' style={{fontSize : 10}}> {session?.data?.user?.email} </span>
                             </p>
                         </div>
                     </a>
-                </div>
+                </div>: <></>}
             </div>
             {/* Mobile Navigation   */}
             <div className='mob-nav sm:block md:hidden inline'>
                 <div><i className="ri-menu-2-line"></i></div>
             </div>
-            
+
         </>
     )
 }
