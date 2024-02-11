@@ -6,7 +6,7 @@ import { handleAsk } from '@/utils/handleAsk.js'
 import { useState } from 'react';
 import ReactLoading from 'react-loading';
 import Source from '@/components/ui/Sources';
-import Skeleton from '@/components/ui/skeleton';
+import Skeleton from '@/components/ui/Skeleton';
 
 
 const AnswerPage = () => {
