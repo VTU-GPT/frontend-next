@@ -12,7 +12,7 @@ const page = () => {
             <form className="mt-6" action="#" method="POST">
               <div>
                 <label className="block text-gray-700">Email Address</label>
-                <input type="email" name="" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required />
+                <input type="email" name="" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete='true' required />
               </div>
 
               <div className="mt-4">
@@ -25,7 +25,7 @@ const page = () => {
                 <a href="#" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
               </div>
 
-              <button type='submit' class="relative w-full inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden mt-4 text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
+              <button type='submit' className="relative w-full inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden mt-4 text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
                     <span className="relative w-full px-5 py-2.5 transition-all ease-in duration-75 bg-orange-100 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                         LOGIN
                     </span>
