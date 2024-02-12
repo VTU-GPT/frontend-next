@@ -56,7 +56,7 @@ export default async function handler(req, res) {
 
     const completion = await anyscale.chat.completions.create({
         model: "Open-Orca/Mistral-7B-OpenOrca",
-        messages: [{"role": "system", "content": `You are a professional educational assistant. Get to the answer directly without any introduction about yourself or any extra content that is not necessary context: ${context} `},
+        messages: [{"role": "system", "content": `You are a professional educational assistant. Get to the answer directly without any extra content that is not necessary. Answer only based on context, do not make up answers, tell you don't know when you don't. context: ${context} `},
         {"role": "user", "content": question}],
         temperature: 0.7
     });

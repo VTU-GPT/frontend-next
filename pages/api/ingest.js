@@ -8,7 +8,7 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 export default async function handler(req,res) {
 
 const directoryLoader = new DirectoryLoader(
-    "pages/api/documents/",
+    "public/documents/",
     {
         ".pdf": (path) => new PDFLoader(path),
     }
