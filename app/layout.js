@@ -5,6 +5,7 @@ import './resp.css'
 import 'remixicon/fonts/remixicon.css'
 import ReduxProvider from '@/provider/redux/ReduxProvider'
 import Sidebar from '@/components/Sidebar'
+import AuthProvider from '@/components/AuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +19,9 @@ export default function RootLayout({ children }) {
     <ReduxProvider>
       <html lang="en">
         <body className={inter.className}>
+          <AuthProvider>
             {children}
+          </AuthProvider>
         </body>
       </html>
     </ReduxProvider>
