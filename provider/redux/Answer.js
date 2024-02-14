@@ -16,6 +16,7 @@ export const QuestionAnswerJson = createSlice({
                 })
             }
             state.content[state.content.length-1].answer = action.payload.answer;
+            state.content[state.content.length-1].sources = action.payload.sources;  
         }
     }
 })

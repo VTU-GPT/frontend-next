@@ -11,7 +11,8 @@ export const handleAsk = async (question) => {
         const data = await response.json();
         return {
             question : question,
-            answer : data.answer.content
+            answer : data.answer.content,
+            sources : data.sources
         }
     }
     

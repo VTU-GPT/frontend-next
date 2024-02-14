@@ -36,7 +36,8 @@ const Home = () => {
         setAnswer(data.answer);
         dispatch(addAnswer({
           question: question,
-          answer: data.answer.content
+          answer: data.answer.content,
+          sources : data.sources
         })
         )
         setError('');
