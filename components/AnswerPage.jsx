@@ -59,7 +59,7 @@ const AnswerPage = () => {
                                         <h3 key={el.id} className='question' style={{ fontWeight: 600 }}>{(index + 1) + ".  " + el.question}</h3>
                                         <div className='subanswer-div'>
                                             <h1 className='flex gap-2'><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="align-left" className="svg-inline--fa fa-align-left fa-fw w-4 inline" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M24 40C10.7 40 0 50.7 0 64S10.7 88 24 88H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zm0 128c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zM0 320c0 13.3 10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24c-13.3 0-24 10.7-24 24zM24 424c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24z"></path></svg><span>Answer</span></h1>
-                                            {el.answer ? <p key={el.id} className='answer' style={{ whiteSpace: 'break-spaces' }}>{el.answer.slice(1)}</p> :
+                                            {el.answer ? <p key={el.id} className='answer' style={{ whiteSpace: 'break-spaces' }}>{el.answer}</p> :
                                                 <Skeleton />}
                                         </div>
                                         <div className="source-container">
@@ -67,7 +67,7 @@ const AnswerPage = () => {
                                             <div className='py-4'>
                                                 {/* <Source link="public/documents/Module 1 [www.vtuloop.com] (1).pdf" filename="BDA Module 1" /> */}
                                                 {el.sources && el.sources.map(source => (
-                                                    <Source link={source.source} filename={source.source.split('\\').slice(-1).toString().slice(0,15) + "..." } pageNumber={source.pageNumber}/>
+                                                    <Source link={source.source.split('\\').slice(-1).toString()} filename={source.source.split('\\').slice(-1).toString().slice(0,15) + "..." } pageNumber={source.pageNumber}/>
                                                 ))}
                                             </div>
                                         </div>
