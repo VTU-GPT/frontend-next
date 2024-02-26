@@ -17,9 +17,17 @@ export const QuestionAnswerJson = createSlice({
             }
             state.content[state.content.length-1].answer = action.payload.answer;
             state.content[state.content.length-1].sources = action.payload.sources;  
+        },
+        showAnswer(state,action){
+            state.content.push({
+                id : action.payload.id,
+                question : action.payload.question,
+                answer : action.payload.answer,
+                sources : action.payload.sources
+            })
         }
     }
 })
 
-export const {addAnswer} = QuestionAnswerJson.actions
+export const {addAnswer,showAnswer} = QuestionAnswerJson.actions
 

@@ -2,7 +2,7 @@
 import React from 'react'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { addAnswer } from '@/provider/redux/Answer';
+import { addAnswer,showAnswer } from '@/provider/redux/Answer';
 import { handleAsk } from '@/utils/handleAsk.js'
 import { useState } from 'react';
 import ReactLoading from 'react-loading';
@@ -11,27 +11,41 @@ import Skeleton from '@/components/ui/Skeleton';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
+
 const AnswerPage = () => {
     const session = useSession();
+    const dispatch = useDispatch()
+    const [hasRunOnce,setHasRunOnce] = useState(false);
+    useEffect(()=>{
+    const checkForQuestions = async () => {
+        if(session.status=='authenticated' && session.data.userId && !hasRunOnce){
+            axios.get(`/api/questions?userId=${session.data.userId}`)
+            .then(res => {
+                const arr = res.data;
+                arr.map(ques => {
+                     dispatch(showAnswer({
+                        question: ques.question,
+                        answer: ques.answer,
+                        sources : ques.sources,
+                        id: ques.question_id
+                    }))
+                })
+                setHasRunOnce(false)
+            })
+
+        }
+    }    
+    checkForQuestions();
+    },[session.status])
     const [notebookName, setNotebookName] = useState("New Notebook")
     const [question, setquestion] = useState("")
     const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch()
+    
     const scrollTolast = () => {
         const answerBoxEl = document.querySelector('.answer-box');
         answerBoxEl.scrollTop = answerBoxEl.scrollHeight;
     }
     const answerList = useSelector((store) => store.qna.content)
-    useEffect(() => {
-        if(session.status == 'authenticated'){
-            axios.post('api/uploadingAnswer',{
-                answerList : answerList,
-            })
-            .then((res) => {
-                console.log(res)
-            })
-        }
-    }, answerList)
     const submitHandler = async(e) =>{
         await dispatch(addAnswer({
             question: question,
@@ -52,13 +66,14 @@ const AnswerPage = () => {
         })
         setLoading(false);
         scrollTolast();
+
     }
     return (
         <>
             <div className="answer-container">
                 <div className='answer-box flex flex-row justify-center'>
                     <div className='flex flex-col w-full'>
-                        <div className="answer-submenu-container flex justify-between py-7 px-5">
+                        <div className="answer-submenu-container flex justify-between py-7 px-5 relative z-10">
                             <input
                                 className='notebook-name-box p-2 bg-inherit outline-none focus:outline-1'
                                 value={notebookName}

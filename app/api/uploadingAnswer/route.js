@@ -2,6 +2,7 @@ import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 export async function POST(req,res){
     const request = await req.json();
-    // await sql`insert into `
-    return NextResponse.json(false)
+    console.log(request);
+    await sql`insert into questions(question_id,question,answer,sources,user_id) values (${request.id},${request.question},${request.answer},${JSON.stringify(request.sources)},${request.userId})`
+    return NextResponse.json(true)
 }
