@@ -14,8 +14,8 @@ const page = () => {
         <div className="bg-white p-5 flex rounded-2xl shadow-2xl">
           <div className="px-5">
             <h2 className="text-2xl font-bold text-[#002D74]">Login</h2>
-            <p className="text-sm mt-4 text-[#002D74]">If you have an account, please login</p>
-            <form className="mt-6" action="#" method="POST">
+            {/* <p className="text-sm mt-4 text-[#002D74]">If you have an account, please login</p> */}
+            {/* <form className="mt-6" action="#" method="POST">
               <div>
                 <label className="block text-gray-700">Email Address</label>
                 <input type="email" name="" id="" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete='true' required />
@@ -36,7 +36,7 @@ const page = () => {
                         LOGIN
                     </span>
                 </button>
-            </form>
+            </form> */}
 
             <div className="mt-7 grid grid-cols-3 items-center text-gray-500">
               <hr className="border-gray-500" />

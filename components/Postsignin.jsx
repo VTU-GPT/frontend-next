@@ -28,7 +28,8 @@ const Postsignin = () => {
             semester: semester,
             branch: branch,
             passingYear: passingYear,
-            scheme : scheme
+            scheme : scheme,
+            userId : session.data.userId
         })
         if(response){
             window.location.href = "http://localhost:3000";

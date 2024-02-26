@@ -18,7 +18,6 @@ import { signOut, useSession } from 'next-auth/react'
 
 const Sidebar = () => {
     const session = useSession();
-    console.log(session)
     useEffect(() => {
         document.querySelector('.mob-nav').addEventListener('click', function () {
             document.querySelector('.sidebar').style.transform = 'translateX(0px)'

@@ -1,5 +1,6 @@
 'use client';
 import React from 'react'
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { addAnswer } from '@/provider/redux/Answer';
 import { handleAsk } from '@/utils/handleAsk.js'
@@ -7,9 +8,11 @@ import { useState } from 'react';
 import ReactLoading from 'react-loading';
 import Source from '@/components/ui/Sources';
 import Skeleton from '@/components/ui/Skeleton';
-
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 const AnswerPage = () => {
+    const session = useSession();
     const [notebookName, setNotebookName] = useState("New Notebook")
     const [question, setquestion] = useState("")
     const [loading, setLoading] = useState(false);
@@ -19,6 +22,37 @@ const AnswerPage = () => {
         answerBoxEl.scrollTop = answerBoxEl.scrollHeight;
     }
     const answerList = useSelector((store) => store.qna.content)
+    useEffect(() => {
+        if(session.status == 'authenticated'){
+            axios.post('api/uploadingAnswer',{
+                answerList : answerList,
+            })
+            .then((res) => {
+                console.log(res)
+            })
+        }
+    }, answerList)
+    const submitHandler = async(e) =>{
+        await dispatch(addAnswer({
+            question: question,
+            answer: ''
+        }))
+        setquestion('');
+        setLoading(true);
+        scrollTolast();
+        e.target.blur();
+        const resp = await handleAsk(question);
+        await dispatch(addAnswer(resp));
+        await axios.post('/api/uploadingAnswer',{
+            id : Math.random(15).toString(32).slice(2),
+            question : resp.question,
+            answer : resp.answer,
+            sources : resp.sources,
+            userId : session.data.userId
+        })
+        setLoading(false);
+        scrollTolast();
+    }
     return (
         <>
             <div className="answer-container">
@@ -51,8 +85,9 @@ const AnswerPage = () => {
                                 </div>
                             </button>
                         </div>
-
-                        <div className="w-4/5 md:w-3/5 mx-auto mt-16 pb-12">
+                        
+                        <div className="w-4/5 md:w-3/5 mx-auto mt-16 pb-12 relative">
+                        {answerList.length == 0 ? <h1 className='text-4xl absolute top-72 w-full text-center text-gray-400'>No question in this Notebook...</h1> : ""}
                             {
                                 answerList.map((el, index) => (
                                     <>
@@ -88,18 +123,7 @@ const AnswerPage = () => {
                             onKeyDown={async (e) => {
                                 if (e.key === 'Enter') {
                                     if (question) {
-                                        await dispatch(addAnswer({
-                                            question: question,
-                                            answer: ''
-                                        }))
-                                        setquestion('');
-                                        setLoading(true);
-                                        scrollTolast();
-                                        e.target.blur();
-                                        const resp = await handleAsk(question);
-                                        await dispatch(addAnswer(resp));
-                                        setLoading(false);
-                                        scrollTolast();
+                                        submitHandler(e);
                                     }
                                 }
                             }}
@@ -108,18 +132,7 @@ const AnswerPage = () => {
                             className="follow-ask-btn flex items-center justify-center text-white bg-black rounded-3xl "
                             onClick={async (e) => {
                                 if (question) {
-                                    await dispatch(addAnswer({
-                                        question: question,
-                                        answer: ''
-                                    }))
-                                    setquestion('');
-                                    setLoading(true);
-                                    scrollTolast();
-                                    e.target.blur();
-                                    const resp = await handleAsk(question);
-                                    await dispatch(addAnswer(resp));
-                                    setLoading(false);
-                                    scrollTolast();
+                                    submitHandler(e);
                                 }
                             }}
                         >

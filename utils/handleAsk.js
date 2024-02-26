@@ -9,11 +9,12 @@ export const handleAsk = async (question) => {
     });
     if (response.ok) {
         const data = await response.json();
-        return {
+        const answerObject = {
             question : question,
             answer : data.answer.content,
             sources : data.sources
-        }
+        };
+        return answerObject
     }
     
 }
