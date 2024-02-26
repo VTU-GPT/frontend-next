@@ -45,7 +45,9 @@ const AnswerPage = () => {
         const answerBoxEl = document.querySelector('.answer-box');
         answerBoxEl.scrollTop = answerBoxEl.scrollHeight;
     }
+
     const answerList = useSelector((store) => store.qna.content)
+
     const submitHandler = async(e) =>{
         await dispatch(addAnswer({
             question: question,
@@ -57,16 +59,17 @@ const AnswerPage = () => {
         e.target.blur();
         const resp = await handleAsk(question);
         await dispatch(addAnswer(resp));
-        await axios.post('/api/uploadingAnswer',{
-            id : Math.random(15).toString(32).slice(2),
-            question : resp.question,
-            answer : resp.answer,
-            sources : resp.sources,
-            userId : session.data.userId
-        })
+        if(session.status == "authenticated"){
+            await axios.post('/api/uploadingAnswer',{
+                id : Math.random(15).toString(32).slice(2),
+                question : resp.question,
+                answer : resp.answer,
+                sources : resp.sources,
+                userId : session.data.userId
+            })
+        }
         setLoading(false);
         scrollTolast();
-
     }
     return (
         <>
