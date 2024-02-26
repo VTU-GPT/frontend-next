@@ -10,15 +10,15 @@ const authOptions = {
         })
     ],
     callbacks : {
-       async signIn ({user,account}){
-        if(account.provider == 'google'){
-            const res = await sql`select * from Users where email = ${user?.email}`
-            if(!res.rowCount){
-                await sql`insert into Users (UID,Name,Email,Hashed_Password) values (${user?.id},${user?.name},${user?.email},'google')`;
-            }
-            return user;
-        }
-       }
+    //    async signIn ({user,account}){
+    //     if(account.provider == 'google'){
+    //         const res = await sql`select * from Users where email = ${user?.email}`
+    //         if(!res.rowCount){
+    //             await sql`insert into Users (UID,Name,Email,Hashed_Password) values (${user?.id},${user?.name},${user?.email},'google')`;
+    //         }
+    //         return user;
+    //     }
+    //    }
     }
 }
 
