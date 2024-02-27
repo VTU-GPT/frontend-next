@@ -10,6 +10,7 @@ export const QuestionAnswerJson = createSlice({
             if(action.payload.answer == ''){
                 state.content.push({
                     id:nanoid(),
+                    notebookId : action.payload.notebookId,
                     question : action.payload.question,
                     answer : action.payload.answer,
                     sources : []
@@ -20,6 +21,7 @@ export const QuestionAnswerJson = createSlice({
         },
         showAnswer(state,action){
             state.content.push({
+                notebookId : action.payload.notebookId,
                 id : action.payload.id,
                 question : action.payload.question,
                 answer : action.payload.answer,

@@ -12,25 +12,29 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
 
-const AnswerPage = () => {
+const AnswerPage = ({notebookId}) => {
     const session = useSession();
     const dispatch = useDispatch()
     const [hasRunOnce,setHasRunOnce] = useState(false);
     useEffect(()=>{
     const checkForQuestions = async () => {
-        if(session.status=='authenticated' && session.data.userId && !hasRunOnce){
-            axios.get(`/api/questions?userId=${session.data.userId}`)
+        if(session.status=='authenticated' && notebookId && !hasRunOnce){
+            axios.get(`http://localhost:3000/api/questions?notebookId=${notebookId}`)
             .then(res => {
                 const arr = res.data;
-                arr.map(ques => {
-                     dispatch(showAnswer({
-                        question: ques.question,
-                        answer: ques.answer,
-                        sources : ques.sources,
-                        id: ques.question_id
-                    }))
-                })
-                setHasRunOnce(false)
+                console.log(arr);
+                if(arr.length != 0){
+                    arr.map(ques => {
+                        dispatch(showAnswer({
+                           notebookId : notebookId, 
+                           question: ques.question,
+                           answer: ques.answer,
+                           sources : ques.sources,
+                           id: ques.question_id
+                       }))
+                   })
+                }
+                setHasRunOnce(true)
             })
 
         }
@@ -65,7 +69,8 @@ const AnswerPage = () => {
                 question : resp.question,
                 answer : resp.answer,
                 sources : resp.sources,
-                userId : session.data.userId
+                userId : session.data.userId,
+                notebookId : notebookId
             })
         }
         setLoading(false);
@@ -108,7 +113,7 @@ const AnswerPage = () => {
                         {answerList.length == 0 ? <h1 className='text-4xl absolute top-72 w-full text-center text-gray-400'>No question in this Notebook...</h1> : ""}
                             {
                                 answerList.map((el, index) => (
-                                    <>
+                                   el.notebookId == notebookId && <>
                                         <h3 key={el.id} className='question' style={{ fontWeight: 600 }}>{(index + 1) + ".  " + el.question}</h3>
                                         <div className='subanswer-div'>
                                             <h1 className='flex gap-2'><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="align-left" className="svg-inline--fa fa-align-left fa-fw w-4 inline" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M24 40C10.7 40 0 50.7 0 64S10.7 88 24 88H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zm0 128c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zM0 320c0 13.3 10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24c-13.3 0-24 10.7-24 24zM24 424c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24z"></path></svg><span>Answer</span></h1>

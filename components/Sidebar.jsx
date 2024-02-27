@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -15,9 +15,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import logo from '@/public/logo_vtu-gpt.png'
 import { signOut, useSession } from 'next-auth/react'
+import axios from 'axios'
 
 const Sidebar = () => {
+    const [notebooks, setNotebooks] = useState([]);
     const session = useSession();
+    useEffect(() => {
+        if (session.status == 'authenticated') {
+            axios.get(`http://localhost:3000/api/notebooks?userId=${session.data.userId}`)
+                .then(res => {
+                    setNotebooks(res.data);
+                })
+
+        }
+    }, [session])
     useEffect(() => {
         document.querySelector('.mob-nav').addEventListener('click', function () {
             document.querySelector('.sidebar').style.transform = 'translateX(0px)'
@@ -135,23 +146,17 @@ const Sidebar = () => {
                                 </summary>
 
                                 <ul className="mt-2 space-y-1 px-4">
-                                    <li>
-                                        <a
-                                            href=""
-                                            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                        >
-                                            Notebook 1
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a
-                                            href=""
-                                            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                        >
-                                            Notebook 2
-                                        </a>
-                                    </li>
+                                    {notebooks && notebooks.map((notebook, index) => (
+                                        <li>
+                                            <Link
+                                                href={`http://localhost:3000/answer/${notebook.notebook_id}`}
+                                                key={index}
+                                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                            >
+                                                {notebook.notebook_name}
+                                            </Link>
+                                        </li>
+                                    ))}
                                 </ul>
                             </details>
                         </li>
@@ -246,11 +251,11 @@ const Sidebar = () => {
                             <p className="text-xs">
                                 <strong className="block font-medium">{session.data.user?.name}</strong>
 
-                                <span className='text-xs' style={{fontSize : 10}}> {session?.data?.user?.email} </span>
+                                <span className='text-xs' style={{ fontSize: 10 }}> {session?.data?.user?.email} </span>
                             </p>
                         </div>
                     </a>
-                </div>: <></>}
+                </div> : <></>}
             </div>
             {/* Mobile Navigation   */}
             <div className='mob-nav sm:block md:hidden inline'>
