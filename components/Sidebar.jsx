@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
+import toast,{Toaster} from 'react-hot-toast'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -19,15 +20,35 @@ import axios from 'axios'
 
 const Sidebar = () => {
     const [notebooks, setNotebooks] = useState([]);
-    const session = useSession();
-    useEffect(() => {
+    const [newNotebookName,setNewNotebookName] = useState("")
+    let getNotebooks = () => {
         if (session.status == 'authenticated') {
             axios.get(`http://localhost:3000/api/notebooks?userId=${session.data.userId}`)
                 .then(res => {
                     setNotebooks(res.data);
                 })
-
         }
+    };
+    const session = useSession();
+    const createNewNotebook = async () => {
+        if(newNotebookName && session.status == 'authenticated'){
+            const resp = await axios.post('/api/createNotebook',{
+                userId : session.data.userId,
+                notebookName : newNotebookName
+            })
+            if(resp.data.message == 'success'){
+                toast.success("New Notebook created Succesfully");
+                setNewNotebookName("")
+                getNotebooks();
+            }
+            if(resp.data.message == 'failed'){
+                toast.error("Error in creating new notebook")
+                setNewNotebookName("")
+            }
+        }
+    }
+    useEffect(() => {
+        getNotebooks();
     }, [session])
     useEffect(() => {
         document.querySelector('.mob-nav').addEventListener('click', function () {
@@ -87,6 +108,7 @@ const Sidebar = () => {
         // </>
         <>
             <div className="sidebar flex h-screen flex-col justify-between border-e">
+                <Toaster/>
                 <div className='close-btn sm:inline md:hidden'><i className="ri-arrow-left-double-line"></i></div>
                 <div className="px-4 py-6">
                     <span className="grid h-10 w-full px-10 place-content-center rounded-lg">
@@ -103,26 +125,27 @@ const Sidebar = () => {
                                     <AlertDialogHeader>
                                         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                                         <AlertDialogDescription>
-                                            This action cannot be undone. This will permanently delete your account
-                                            and remove your data from our servers.
+                                            <div className='border-2 border-grey-900 rounded-lg'>
+                                            <input value={newNotebookName} onChange={e => setNewNotebookName(e.target.value)} type="text" className='w-full h-10 p-3 rounded-lg outline-none' placeholder='Notebook Name'/>
+                                            </div>
                                         </AlertDialogDescription>
                                     </AlertDialogHeader>
                                     <AlertDialogFooter>
                                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                        <AlertDialogAction>Continue</AlertDialogAction>
+                                        <AlertDialogAction><button onClick={createNewNotebook}>Continue</button></AlertDialogAction>
                                     </AlertDialogFooter>
                                 </AlertDialogContent>
                             </AlertDialog>
                         </li>
                         <li>
-                            <a
-                                href=""
+                            <Link
+                                href="/"
                                 className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                             >
                                 Home
-                            </a>
+                            </Link>
                         </li>
-                        <li>
+                        {notebooks.length != 0 && <li>
                             <details className="group [&_summary::-webkit-details-marker]:hidden">
                                 <summary
                                     className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
@@ -146,7 +169,7 @@ const Sidebar = () => {
                                 </summary>
 
                                 <ul className="mt-2 space-y-1 px-4">
-                                    {notebooks && notebooks.map((notebook, index) => (
+                                    {notebooks.map((notebook, index) => (
                                         <li>
                                             <Link
                                                 href={`http://localhost:3000/answer/${notebook.notebook_id}`}
@@ -159,7 +182,7 @@ const Sidebar = () => {
                                     ))}
                                 </ul>
                             </details>
-                        </li>
+                        </li>}
                         {session.status == 'authenticated' ? <li>
                             <Link
                                 href="/" onClick={(e) => {
@@ -241,10 +264,11 @@ const Sidebar = () => {
 
                 {session.status === 'authenticated' ? <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
                     <a href="#" className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
-                        <img
+                        <Image
                             alt="Man"
                             src={session?.data?.user?.image}
                             className="h-10 w-10 rounded-full object-cover"
+                            width={30} height={30}
                         />
 
                         <div>

@@ -1,13 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 't1.gstatic.com',
-        port: '',
-      },
-    ],
+    domains : ['t1.gstatic.com','lh3.googleusercontent.com']
   },
   webpack: (config) => {
     config.resolve.alias.canvas = false;

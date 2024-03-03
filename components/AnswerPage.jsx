@@ -12,11 +12,12 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
 
-const AnswerPage = ({notebookId}) => {
+const AnswerPage = ({notebookId,notebookName}) => {
     const session = useSession();
     const dispatch = useDispatch()
     const [hasRunOnce,setHasRunOnce] = useState(false);
     useEffect(()=>{
+    setNewNotebookName(notebookName)    
     const checkForQuestions = async () => {
         if(session.status=='authenticated' && notebookId && !hasRunOnce){
             axios.get(`http://localhost:3000/api/questions?notebookId=${notebookId}`)
@@ -41,7 +42,7 @@ const AnswerPage = ({notebookId}) => {
     }    
     checkForQuestions();
     },[session.status])
-    const [notebookName, setNotebookName] = useState("New Notebook")
+    const [newNotebookName, setNewNotebookName] = useState("")
     const [question, setquestion] = useState("")
     const [loading, setLoading] = useState(false);
     
@@ -84,8 +85,8 @@ const AnswerPage = ({notebookId}) => {
                         <div className="answer-submenu-container flex justify-between py-7 px-5 relative z-10">
                             <input
                                 className='notebook-name-box p-2 bg-inherit outline-none focus:outline-1'
-                                value={notebookName}
-                                onChange={(e) => setNotebookName(e.target.value)}
+                                value={newNotebookName}
+                                onChange={(e) => setNewNotebookName(e.target.value)}
                             />
                             <button
                                 type="button"
