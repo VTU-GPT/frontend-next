@@ -33,10 +33,10 @@ def format_docs(docs):
 
 @app.post("/query")
 async def query(question_request: QuestionRequest):
-    template = """You are a professional educational assistant. Get to the answer directly without any extra content that is not necessary.     
-    context = {context}
-    question = {question}
-    if the answer is not in the pdf , answer "I do not know what you are asking about"
+    template = """You are a professional educational assistant. Get to the answer directly without any extra content that is not necessary. Answer only based on context, do not make up answers, tell you don't know when you don't.
+Context: {context}
+Question: {question}
+If the answer cannot be found within the provided context, please respond with "I do not know what you are asking about."
     """
     
     prompt = ChatPromptTemplate.from_template(template)
@@ -64,12 +64,12 @@ async def ingest_documents():
 
     try:
         # Load documents from the directory
-        pdf_folder_path = "D:\\WebDev\\vtugpt\\backend\\documents"
+        pdf_folder_path = "documents"
         documents = []
         for file in os.listdir(pdf_folder_path):
             if file.endswith('.pdf'):
                 pdf_path = os.path.join(pdf_folder_path, file)
-                loader = PyPDFLoader(pdf_path,extract_images=True)
+                loader = PyPDFLoader(pdf_path,extract_images=False)
                 documents.extend(loader.load())
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=10)
         chunked_documents = text_splitter.split_documents(documents)
