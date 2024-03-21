@@ -7,6 +7,7 @@ from langchain.chains import RetrievalQA
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms import Anyscale
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 import os
 
 os.environ["ANYSCALE_API_BASE"] = "https://api.endpoints.anyscale.com/v1"
@@ -14,6 +15,17 @@ os.environ["ANYSCALE_API_KEY"] = 'esecret_u2sbcvxgegri9x31reyagyurgb'
 
 
 app = FastAPI()
+origins = [
+    "http://localhost:3000",
+    "http://localhost:8080",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class QuestionRequest(BaseModel):
     question: str

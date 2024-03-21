@@ -1,6 +1,6 @@
 
 export const handleAsk = async (question) => {
-    const response = await fetch('/api/llm', {
+    const response = await fetch('http://localhost:8000/query', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -11,8 +11,8 @@ export const handleAsk = async (question) => {
         const data = await response.json();
         const answerObject = {
             question : question,
-            answer : data.answer.content,
-            sources : data.sources
+            answer : data.result,
+            sources : []
         };
         return answerObject
     }

@@ -23,7 +23,7 @@ const Home = () => {
     })
     )
     try {
-      const response = await fetch('/api/llm', {
+      const response = await fetch('http://localhost:8000/query', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,11 +33,12 @@ const Home = () => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
         setAnswer(data.answer);
         dispatch(addAnswer({
           question: question,
-          answer: data.answer.content,
-          sources : data.sources
+          answer: data.result,
+          sources : []
         })
         )
         setError('');
