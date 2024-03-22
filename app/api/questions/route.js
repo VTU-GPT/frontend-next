@@ -1,9 +1,21 @@
+import { PrismaClient } from "@prisma/client";
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
 export async function GET(req,res){
+    const prisma = new PrismaClient();
     // const request = await req.json();
     const notebookId = req.nextUrl.searchParams.get('notebookId')
-    const resp = await sql`select question_id,question,answer,sources from questions where notebook_id = ${notebookId}`
-    return NextResponse.json(resp.rows);
+    const questions = await prisma.questions.findMany({
+        where : {
+            notebook_id : notebookId
+        },
+        select : {
+            question_id : true,
+            question : true,
+            answer : true,
+            sources : true
+        }
+    })
+    return NextResponse.json(questions);
 }
