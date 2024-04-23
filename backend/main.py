@@ -8,6 +8,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms import Anyscale
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+import aiohttp
 import os
 
 os.environ["ANYSCALE_API_BASE"] = "https://api.endpoints.anyscale.com/v1"
@@ -45,14 +46,20 @@ def format_docs(docs):
 
 @app.post("/query")
 async def query(question_request: QuestionRequest):
-    template = """You are a professional educational assistant. Get to the answer directly without any extra content that is not necessary. Answer only based on context, do not make up answers, tell you don't know when you don't.
-Context: {context}
-Question: {question}
-If the answer cannot be found within the provided context, please respond with "I do not know what you are asking about."
-    """
+    template =  """
+You are an educational expert, answer the given question only based on the given context, do not try to make up an answer.
+
+Context:
+{context}
+
+Question:
+{question}
+
+The answer should be presented in 3-4 lines, formatted with appropriate markup for clarity and organization.
+"""
     
     prompt = ChatPromptTemplate.from_template(template)
-    llm = Anyscale(model_name='Open-Orca/Mistral-7B-OpenOrca')
+    llm = Anyscale(model_name='meta-llama/Llama-2-70b-chat-hf')
 
     try:
         db = load_vectorstore()
@@ -64,7 +71,27 @@ If the answer cannot be found within the provided context, please respond with "
         )
         question = question_request.question
         result = qa_chain({"query": question})
+        query_with_vtu = f"{question} VTU"
 
+        # Asynchronous call to YouTube Data API
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://www.googleapis.com/youtube/v3/search", params={
+                "key": "AIzaSyAfMQm5XhQa21QIGz52e9YlBPjEpgGG8pg",
+                "part": "snippet",
+                "q": query_with_vtu,
+                "maxResults": 3,
+                "type": "video"
+            }) as response:
+                youtube_data = await response.json()
+        videos = []
+        for item in youtube_data.get("items", []):
+            video_id = item["id"]["videoId"]
+            title = item["snippet"]["title"]
+            thumbnail_url = item["snippet"]["thumbnails"]["default"]["url"]
+            videos.append({"video_id": video_id, "title": title, "thumbnail_url": thumbnail_url})
+
+        # Add extracted video information to the result
+        result['youtube_videos'] = videos
         return result
 
     except Exception as e:
@@ -98,3 +125,4 @@ async def ingest_documents():
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
