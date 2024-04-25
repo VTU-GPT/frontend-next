@@ -19,6 +19,6 @@ export async function POST(req,res){
          uid : resp.userId
       }
    })
-   const sqlResponse =  await sql`insert into users (email,name,phone,college,city,sem,branch,passing_Year,scheme,uid) values (${resp.email},${resp.name},${resp.phone},${resp.college},${resp.city},${resp.semester},${resp.branch},${resp.passingYear},${resp.passingYear},${resp.userId})`
+   // const sqlResponse =  await sql`insert into users (email,name,phone,college,city,sem,branch,passing_Year,scheme,uid) values (${resp.email},${resp.name},${resp.phone},${resp.college},${resp.city},${resp.semester},${resp.branch},${resp.passingYear},${resp.passingYear},${resp.userId})`
    return NextResponse.json({response});
 }
