@@ -12,7 +12,7 @@ const getNotebookName = async (notebookId) => {
 const page = async ({ params }) => {
   const session = await getServerSession(authOptions);
   const notebookName = await getNotebookName(params.notebookid);
-  if (notebookName.length != 0 && notebookName[0].uid == session.userId) {
+  if (session && notebookName.length != 0 && notebookName[0].uid == session.userId) {
     return (
       <>
         <AnswerPage notebookId={params.notebookid} notebookName={notebookName[0].notebook_name} />

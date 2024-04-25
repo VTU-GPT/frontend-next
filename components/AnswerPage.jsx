@@ -25,7 +25,7 @@ const AnswerPage = ({notebookId,notebookName}) => {
                 const arr = res.data;
                 console.log(arr);
                 if(arr.length != 0){
-                    arr.map(ques => {
+                    arr.forEach(ques => {
                         dispatch(showAnswer({
                            notebookId : notebookId, 
                            question: ques.question,
@@ -41,7 +41,7 @@ const AnswerPage = ({notebookId,notebookName}) => {
         }
     }    
     checkForQuestions();
-    },[session.status])
+    },[])
     const [newNotebookName, setNewNotebookName] = useState("")
     const [question, setquestion] = useState("")
     const [loading, setLoading] = useState(false);
@@ -51,22 +51,24 @@ const AnswerPage = ({notebookId,notebookName}) => {
         answerBoxEl.scrollTop = answerBoxEl.scrollHeight;
     }
 
-    const answerList = useSelector((store) => store.qna.content)
+    let answerList = useSelector((store) => store.qna.content)
 
     const submitHandler = async(e) =>{
-        await dispatch(addAnswer({
+        let id = await dispatch(addAnswer({
             question: question,
-            answer: ''
+            answer: '',
+            notebookId : notebookId
         }))
+        id = id.payload;
         setquestion('');
         setLoading(true);
         scrollTolast();
         e.target.blur();
         const resp = await handleAsk(question);
-        await dispatch(addAnswer(resp));
-        if(session.status == "authenticated"){
+        await dispatch(addAnswer({...resp,id}));
+        if(session.status == "authenticated" && notebookId){
             await axios.post('/api/uploadingAnswer',{
-                id : Math.random(15).toString(32).slice(2),
+                id : id,
                 question : resp.question,
                 answer : resp.answer,
                 sources : resp.sources,
@@ -111,9 +113,9 @@ const AnswerPage = ({notebookId,notebookName}) => {
                         </div>
                         
                         <div className="w-4/5 md:w-3/5 mx-auto mt-16 pb-12 relative">
-                        {answerList.length == 0 ? <h1 className='text-4xl absolute top-72 w-full text-center text-gray-400'>No question in this Notebook...</h1> : ""}
+                        {answerList.filter(ques => ques.notebookId == notebookId) == 0 ? <h1 className='text-4xl absolute top-72 w-full text-center text-gray-400'>No question in this Notebook...</h1> : ""}
                             {
-                                answerList.map((el, index) => (
+                                answerList.filter(ques => ques.notebookId == notebookId).map((el, index) => (
                                    el.notebookId == notebookId && <>
                                         <h3 key={el.id} className='question' style={{ fontWeight: 600 }}>{(index + 1) + ".  " + el.question}</h3>
                                         <div className='subanswer-div'>
@@ -125,9 +127,9 @@ const AnswerPage = ({notebookId,notebookName}) => {
                                             <h1 className='flex gap-2'><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="list-timeline" className="svg-inline--fa fa-list-timeline fa-fw w-4 inline" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M219.9 112H400V80H219.9l-16 16 16 16zm-72.6-4.7c-6.2-6.2-6.2-16.4 0-22.6l43.3-43.3c6-6 14.1-9.4 22.6-9.4H416c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H213.3c-8.5 0-16.6-3.4-22.6-9.4l-43.3-43.3zM64 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm0 160a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM32 416a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm187.9 16H400V400H219.9l-16 16 16 16zm-72.6-4.7c-6.2-6.2-6.2-16.4 0-22.6l43.3-43.3c6-6 14.1-9.4 22.6-9.4H416c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H213.3c-8.5 0-16.6-3.4-22.6-9.4l-43.3-43.3zM203.9 256l16 16H464V240H219.9l-16 16zm-13.3 54.6l-43.3-43.3c-6.2-6.2-6.2-16.4 0-22.6l43.3-43.3c6-6 14.1-9.4 22.6-9.4H480c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H213.3c-8.5 0-16.6-3.4-22.6-9.4z"></path></svg><span>Sources</span></h1>
                                             <div className='py-4'>
                                                 {/* <Source link="public/documents/Module 1 [www.vtuloop.com] (1).pdf" filename="BDA Module 1" /> */}
-                                                {el.sources && el.sources.map(source => (
+                                                {/* {el.sources && el.sources.map(source => (
                                                     <Source link={source.source.split('\\').slice(-1).toString()} filename={source.source.split('\\').slice(-1).toString().slice(0,15) + "..." } pageNumber={source.pageNumber}/>
-                                                ))}
+                                                ))} */}
                                             </div>
                                         </div>
                                     </>

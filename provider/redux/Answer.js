@@ -7,27 +7,41 @@ export const QuestionAnswerJson = createSlice({
     },
     reducers : {
         addAnswer(state,action){
+            if(action.payload.id){
+                state.content.map(question => {
+                    if(question.id == action.payload.id){
+                        question.answer = action.payload.answer;
+                        question.sources = action.payload.sources;
+                        return;
+                    }
+                })
+            }
+            let id = nanoid()
             if(action.payload.answer == ''){
                 state.content.push({
-                    id:nanoid(),
+                    id:id,
                     notebookId : action.payload.notebookId,
                     question : action.payload.question,
                     answer : action.payload.answer,
                     sources : []
                 })
             }
-            state.content[state.content.length-1].answer = action.payload.answer;
-            state.content[state.content.length-1].sources = action.payload.sources;  
+            action.payload = id;
         },
-        showAnswer(state,action){
-            state.content.push({
-                notebookId : action.payload.notebookId,
-                id : action.payload.id,
-                question : action.payload.question,
-                answer : action.payload.answer,
-                sources : action.payload.sources
-            })
+        showAnswer(state, action) {
+            const questionExists = state.content.some(item => item.id === action.payload.id);
+        
+            if (!questionExists) {
+                state.content.push({
+                    notebookId: action.payload.notebookId,
+                    id: action.payload.id,
+                    question: action.payload.question,
+                    answer: action.payload.answer,
+                    sources: action.payload.sources
+                });
+            }
         }
+        
     }
 })
 
