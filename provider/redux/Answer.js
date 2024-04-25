@@ -12,6 +12,7 @@ export const QuestionAnswerJson = createSlice({
                     if(question.id == action.payload.id){
                         question.answer = action.payload.answer;
                         question.sources = action.payload.sources;
+                        question.youtube = action.payload.youtube;
                         return;
                     }
                 })
@@ -23,7 +24,8 @@ export const QuestionAnswerJson = createSlice({
                     notebookId : action.payload.notebookId,
                     question : action.payload.question,
                     answer : action.payload.answer,
-                    sources : []
+                    sources : [],
+                    youtube : []
                 })
             }
             action.payload = id;
