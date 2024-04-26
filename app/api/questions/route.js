@@ -14,7 +14,8 @@ export async function GET(req,res){
             question_id : true,
             question : true,
             answer : true,
-            sources : true
+            sources : true,
+            youtube : true
         }
     })
     return NextResponse.json(questions);

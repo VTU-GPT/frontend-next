@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 
 const Postsignin = () => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
@@ -39,18 +39,7 @@ const Postsignin = () => {
         }
     }
     useEffect(() => {
-        const pushIfAlreadyExist = () => {
-            setLoading(true)
-            const res = axios.post('http://localhost:3000/api/isFormCompleted', { email: session.data.user.email })
-            res.then(res => {
-                if (res.data.rows.length > 0) {
-                    window.location.href = "http://localhost:3000"
-                }
-                setLoading(false)
-            })
-        }
         if (session.status == 'authenticated') {
-            pushIfAlreadyExist();
             setEmail(session.data.user?.email)
             setName(session.data.user?.name)
         }

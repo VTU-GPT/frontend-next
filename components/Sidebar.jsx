@@ -19,6 +19,8 @@ import { signOut, useSession } from 'next-auth/react'
 import axios from 'axios'
 
 const Sidebar = () => {
+    const [loading,setLoading] = useState(false)
+    const [deleting,setDeleting] = useState(false)
     const [notebooks, setNotebooks] = useState([]);
     const [newNotebookName,setNewNotebookName] = useState("")
     let getNotebooks = () => {
@@ -32,10 +34,12 @@ const Sidebar = () => {
     const session = useSession();
     const createNewNotebook = async () => {
         if(newNotebookName && session.status == 'authenticated'){
+            setLoading(true)
             const resp = await axios.post('/api/createNotebook',{
                 userId : session.data.userId,
                 notebookName : newNotebookName
             })
+            setLoading(false)
             if(resp.data.message == 'success'){
                 toast.success("New Notebook created Succesfully");
                 setNewNotebookName("")
@@ -59,54 +63,19 @@ const Sidebar = () => {
         })
     })
     return (
-        // <>
-        //     <div className="sidebar">
-        //         <div className="logo">
-        //             <Link href='/'>
-        //             <Image
-        //                 src={logo}
-        //                 alt="Picture of the author"
-        //             />
-        //             </Link>
-        //         </div>
-        //         <AlertDialog>
-        //             <AlertDialogTrigger>
-        //                 <p className='new-notebook'> New Notebook </p>
-        //             </AlertDialogTrigger>
-        //             <AlertDialogContent>
-        //                 <AlertDialogHeader>
-        //                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-        //                     <AlertDialogDescription>
-        //                         This action cannot be undone. This will permanently delete your account
-        //                         and remove your data from our servers.
-        //                     </AlertDialogDescription>
-        //                 </AlertDialogHeader>
-        //                 <AlertDialogFooter>
-        //                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-        //                     <AlertDialogAction>Continue</AlertDialogAction>
-        //                 </AlertDialogFooter>
-        //             </AlertDialogContent>
-        //         </AlertDialog>
-        //         <ul className="sidebar-links">
-        //             <li>
-        //                 <Link href='/'><i className="ri-arrow-right-circle-fill"></i> Home</Link>
-        //             </li>
-        //             <li>
-        //                 <Link href='/'><i className="ri-arrow-right-circle-fill"></i> Notebooks</Link>
-        //             </li>
-        //             <li>
-        //                 <Link href='/'><i className="ri-arrow-right-circle-fill"></i> Sign In</Link>
-        //             </li>
-        //         </ul>
-        //         <Link href='' className='signup-button'>Sign Up</Link>
-        //         <div className="sidebar-bottom">
-
-        //         </div>
-        //     </div>
-        //     {/* mobile navigation */}
-
-        // </>
         <>
+            {loading && 
+                <div className='h-screen w-full absolute z-[105] bg-gray-100/85 flex justify-center items-center flex-col'>
+                    <img src="loader.webp" alt="" className='w-[250px] ' width={200} />
+                    <h1 className='bold text-xl '>Creating a Notebook..</h1>
+                </div>
+            }
+            {deleting && 
+                <div className='h-screen w-full absolute z-[105] bg-gray-100/85 flex justify-center items-center flex-col'>
+                    <img src="loader.webp" alt="" className='w-[250px] ' width={200} />
+                    <h1 className='bold text-xl '>Deleting a Notebook..</h1>
+                </div>
+            }
             <div className="sidebar flex h-screen flex-col justify-between border-e">
                 <Toaster/>
                 <div className='close-btn sm:inline md:hidden'><i className="ri-arrow-left-double-line"></i></div>
@@ -170,14 +139,22 @@ const Sidebar = () => {
 
                                 <ul className="mt-2 space-y-1 px-4">
                                     {notebooks.map((notebook, index) => (
-                                        <li>
+                                        <li className='flex justify-between rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700'>
                                             <Link
                                                 href={`http://localhost:3000/answer/${notebook.notebook_id}`}
                                                 key={index}
-                                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                                className=""
                                             >
                                                 {notebook.notebook_name}
                                             </Link>
+                                            <button onClick={async () => {
+                                                setDeleting(true)
+                                                await axios.post('http://localhost:3000/api/deleteNotebook',{notebookId : notebook.notebook_id})
+                                                setDeleting(false)
+                                                getNotebooks();
+                                            }}>
+                                                <img src="/deleteIcon.png" className='w-[17px]' alt="" />
+                                            </button>
                                         </li>
                                     ))}
                                 </ul>

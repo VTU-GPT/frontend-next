@@ -39,7 +39,8 @@ export const QuestionAnswerJson = createSlice({
                     id: action.payload.id,
                     question: action.payload.question,
                     answer: action.payload.answer,
-                    sources: action.payload.sources
+                    sources: action.payload.sources,
+                    youtube: action.payload.youtube
                 });
             }
         }

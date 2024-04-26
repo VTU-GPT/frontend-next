@@ -11,7 +11,8 @@ export async function POST(req,res){
             answer : request.answer,
             sources : JSON.stringify(request.sources),
             user_id : request.userId,
-            notebook_id : request.notebookId
+            notebook_id : request.notebookId,
+            youtube :  JSON.stringify(request.youtube)
         }
     })
     // await sql`insert into questions(question_id,question,answer,sources,user_id,notebook_id) values (${request.id},${request.question},${request.answer},${JSON.stringify(request.sources)},${request.userId},${request.notebookId})`;
