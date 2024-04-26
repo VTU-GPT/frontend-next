@@ -42,7 +42,8 @@ const Home = () => {
             question: question,
             answer: data.result,
             sources: [],
-            id:id
+            id:id,
+            youtube : data.youtube_videos
           })
         );
         setError("");

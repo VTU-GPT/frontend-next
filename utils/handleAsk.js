@@ -13,7 +13,7 @@ export const handleAsk = async (question) => {
         const answerObject = {
             question : question,
             answer : data.result,
-            sources : [],
+            sources : data.source_documents,
             youtube : data.youtube_videos
         };
         return answerObject
