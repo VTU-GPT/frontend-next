@@ -28,6 +28,7 @@
     "cohere-ai": "^7.7.5",
     "faiss": "^1.0.0",
     "faiss-node": "^0.5.1",
+    "framer-motion": "^11.1.7",
     "langchain": "^0.1.17",
     "llamaindex": "^0.1.10",
     "lucide-react": "^0.308.0",
