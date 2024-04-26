@@ -1,16 +1,21 @@
+'use client'
 import React, { useState } from 'react';
 import Link from 'next/link'
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 import logo from '@/public/logo_vtu-gpt.png'
-
+import { useSession } from 'next-auth/react';
 const InputHome = ({ onAsk }) => {
   const router = useRouter();
+  const session = useSession();
   const [question, setQuestion] = useState('');
 
   const handleAsk = () => {
-    console.log(question.length)
+    if(session.status == 'unauthenticated'){
+      router.push('/signin')
+      return;
+    }
     if (question.trim().length != 0) {
       onAsk(question);
       router.push('/answer');

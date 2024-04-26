@@ -8,6 +8,9 @@ import { addAnswer } from "@/provider/redux/Answer";
 import { useDispatch } from "react-redux";
 import ReactLoading from "react-loading";
 import Sidebar from "@/components/Sidebar";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -15,6 +18,7 @@ const Home = () => {
   const [error, setError] = useState("");
   const { toast } = useToast();
   const dispatch = useDispatch();
+
   const handleAsk = async (question) => {
     setLoading(true);
     let id = await dispatch(
@@ -41,7 +45,7 @@ const Home = () => {
           addAnswer({
             question: question,
             answer: data.result,
-            sources: [],
+            sources: data.source_documents,
             id:id,
             youtube : data.youtube_videos
           })
