@@ -41,7 +41,7 @@ const Home = () => {
           addAnswer({
             question: question,
             answer: data.result,
-            sources: [],
+            sources: data.source_documents,
             id:id,
             youtube : data.youtube_videos
           })

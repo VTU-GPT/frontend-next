@@ -46,8 +46,9 @@ def format_docs(docs):
 
 @app.post("/query")
 async def query(question_request: QuestionRequest):
-    template =  """
-You are an educational expert, answer the given question only based on the given context, do not try to make up an answer.
+    template =  """Answer the question based on the context below. If the
+question cannot be answered using the information provided answer
+with "I don't know".
 
 Context:
 {context}
@@ -55,7 +56,7 @@ Context:
 Question:
 {question}
 
-The answer should be presented in 3-4 lines, formatted with appropriate markup for clarity and organization.
+Answer:
 """
     
     prompt = ChatPromptTemplate.from_template(template)
@@ -65,11 +66,12 @@ The answer should be presented in 3-4 lines, formatted with appropriate markup f
         db = load_vectorstore()
         qa_chain = RetrievalQA.from_chain_type(
             llm,
-            retriever=db.as_retriever(),
+            retriever=db.as_retriever(search_kwargs={"k": 3}),
             return_source_documents=True,
             chain_type_kwargs={"prompt": prompt}
         )
         question = question_request.question
+        
         result = qa_chain({"query": question})
         query_with_vtu = f"{question} VTU"
 
