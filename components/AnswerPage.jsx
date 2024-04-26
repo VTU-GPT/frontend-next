@@ -12,6 +12,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import YoutubeCard from '@/components/ui/YoutubeCard';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 
 const AnswerPage = ({notebookId,notebookName}) => {
@@ -54,7 +55,7 @@ const AnswerPage = ({notebookId,notebookName}) => {
     }
 
     let answerList = useSelector((store) => store.qna.content)
-
+    const [clicked,setClicked] = useState(false)
     const submitHandler = async(e) =>{
         let id = await dispatch(addAnswer({
             question: question,
@@ -84,6 +85,19 @@ const AnswerPage = ({notebookId,notebookName}) => {
     }
     return (
         <>
+            {!notebookId && 
+            <motion.div className='modal-window h-screen w-full bg-black/70 absolute z-[100] flex justify-center items-center'
+                initial = {{scale : 0,opacity : 0}}
+                animate = {{scale : clicked == false ? 1 : 0,opacity : clicked == false ? 100 : 0}}
+                transition={{type : 'just'}}
+            >
+                <div className='bg-gray-300 px-10 py-8 rounded-3xl shadow-lg shadow-gray-600 text-center'>
+                    <h1>If you want to save your questions, kindly create a notebook.</h1>
+                    <button onClick={()=> {
+                        document.querySelector('.modal-window').style.display = 'none';
+                    }} className='px-3 py-1 bg-gray-800 text-gray-50 rounded-full mt-5'>Okay</button>
+                </div>
+            </motion.div> }
             <div className="answer-container">
                 <div className='answer-box flex flex-row justify-center'>
                     <div className='flex flex-col w-full'>
