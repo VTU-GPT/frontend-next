@@ -7,7 +7,7 @@ const nextConfig = {
     config.resolve.alias.canvas = false;
     return config;
     },
-  reactStrictMode : true
+  reactStrictMode : false
 }
 
 module.exports = nextConfig
