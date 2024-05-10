@@ -15,7 +15,7 @@ const pdfViewer = ({fileName,pageNumber}) => {
         <>
             <div className='w-full overflow-hidden mx-auto'>
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-            <Viewer fileUrl={`/documents/${fileName}`} initialPage={pageNumber-1} defaultScale={1} onZoom={handleZoom} />;
+            <Viewer fileUrl={`https://vtugpt-docs.s3.eu-north-1.amazonaws.com/${fileName}`} initialPage={pageNumber-1} defaultScale={1} onZoom={handleZoom} />;
             </Worker>
             </div>
         </>
