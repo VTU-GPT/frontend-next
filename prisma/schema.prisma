@@ -3,16 +3,17 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model notebooks {
   notebook_name String      @db.VarChar(255)
   notebook_id   String      @id @db.VarChar(255)
   uid           String      @db.VarChar(255)
-  created_date  DateTime    @default(now()) @db.Date
-  users         users       @relation(fields: [uid], references: [uid], onDelete: NoAction, onUpdate: NoAction)
+  created_time  DateTime    @default(now())
+  users         users       @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: NoAction)
   questions     questions[]
 }
 
@@ -25,22 +26,22 @@ model questions {
   sources      Json?
   notebook_id  String?
   notebooks    notebooks? @relation(fields: [notebook_id], references: [notebook_id], onDelete: Cascade, onUpdate: NoAction)
-  users        users      @relation(fields: [user_id], references: [uid], onDelete: NoAction, onUpdate: NoAction)
+  users        users      @relation(fields: [user_id], references: [uid], onDelete: Cascade, onUpdate: NoAction)
   youtube      String?
 }
 
 model users {
   name            String      @db.VarChar(255)
   email           String      @unique @db.VarChar(255)
+  usn             String      @unique @db.VarChar(255)
   phone           String?     @db.VarChar(20)
   hashed_password String?     @db.VarChar(255)
-  city            String?     @db.VarChar(255)
   college         String?     @db.VarChar(255)
   sem             Int?
-  scheme          String?     @db.VarChar(255)
   branch          String?     @db.VarChar(255)
   passing_year    Int?
   uid             String      @id @db.VarChar(255)
   notebooks       notebooks[]
   questions       questions[]
+  paid            Boolean     @default(false)
 }

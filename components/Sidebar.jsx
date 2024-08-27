@@ -17,8 +17,9 @@ import Link from 'next/link'
 import logo from '@/public/logo_vtu-gpt.png'
 import { signOut, useSession } from 'next-auth/react'
 import axios from 'axios'
-
+import { useRouter } from 'next/navigation'
 const Sidebar = () => {
+    const router = useRouter();
     const [loading,setLoading] = useState(false)
     const [deleting,setDeleting] = useState(false)
     const [notebooks, setNotebooks] = useState([]);
@@ -49,6 +50,8 @@ const Sidebar = () => {
                 toast.error("Error in creating new notebook")
                 setNewNotebookName("")
             }
+        }else{
+            router.push('/signin')
         }
     }
     useEffect(() => {

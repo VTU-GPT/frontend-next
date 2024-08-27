@@ -298,3 +298,8 @@ body,html {
     height: 40px;
     border: 2px solid black;
 }
+
+.registration-form input{
+    /* border: 2px solid gray; */
+    padding-left : 10px !important;
+}

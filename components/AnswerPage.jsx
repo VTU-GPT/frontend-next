@@ -112,7 +112,7 @@ const AnswerPage = ({ notebookId, notebookName }) => {
                     <div className='flex flex-col w-full'>
                         <div className="answer-submenu-container flex justify-between py-7 px-5 relative z-10">
                             <input
-                                className='notebook-name-box p-2 bg-inherit outline-none focus:outline-1'
+                                className='notebook-name-box p-2 bg-inherit outline-none focus:outline-1 border-2 rounded-lg bg-gray-200'
                                 value={newNotebookName}
                                 onChange={(e) => setNewNotebookName(e.target.value)}
                             />

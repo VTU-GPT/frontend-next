@@ -14,7 +14,7 @@ export async function POST(req,res){
         }
        })
        if(checkIfNotebook.length == 0) {
-        await prisma.notebooks.create({
+       const resp = await prisma.notebooks.create({
             data : {
                 notebook_id : nanoid(),
                 uid : request.userId,
@@ -22,7 +22,7 @@ export async function POST(req,res){
             }
         })
         // await sql`insert into notebooks (notebook_id,uid,notebook_name) values (${nanoid()},${request.userId},${request.notebookName});`
-        return NextResponse.json({message : 'success'});
+        return NextResponse.json({message : 'success',id : resp.notebook_id});
        }else{
         return NextResponse.json({message : 'failed'});
        }

@@ -9,6 +9,9 @@
 # testing
 /coverage
 
+backend/__pycache__
+backend/dependencies
+
 # next.js
 /.next/
 /out/

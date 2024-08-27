@@ -2,12 +2,20 @@ import Postsignin from '@/components/Postsignin'
 import React from 'react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { sql } from '@vercel/postgres'
+import { PrismaClient } from '@prisma/client'
 import { redirect } from 'next/navigation'
+
+
+
 const page = async () => {
   const session = await getServerSession(authOptions)
-  const response = await sql`select * from Users where Email = ${session.user.email}`;
-  if(response.rows.length > 0){
+  const prisma = new PrismaClient();
+  const resp = await prisma.users.findMany({
+    where : {
+      email : session.user.email
+    }
+  })
+  if(resp.length > 0){
     redirect('/')
   }else{
     return (

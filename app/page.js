@@ -19,13 +19,13 @@ const Home = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
 
-  const handleAsk = async (question) => {
+  const handleAsk = async (question,notebookId) => {
     setLoading(true);
     let id = await dispatch(
       addAnswer({
         question: question,
         answer: "",
-        notebookId: null,
+        notebookId: notebookId,
       })
     );
     id = id.payload;
